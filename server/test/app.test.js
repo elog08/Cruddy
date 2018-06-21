@@ -1,7 +1,12 @@
 const assert = require('assert');
 const rp = require('request-promise');
+const axios = require('axios');
+const faker = require('faker');
+
 const url = require('url');
 const app = require('../src/app');
+
+const Console = console;
 
 const port = app.get('port') || 3030;
 const getUrl = pathname => url.format({
@@ -9,6 +14,11 @@ const getUrl = pathname => url.format({
   protocol: 'http',
   port,
   pathname
+});
+
+const client = axios.create({
+  baseURL: getUrl(''),
+  timeout: 1000
 });
 
 describe('Feathers application tests', () => {
@@ -27,29 +37,64 @@ describe('Feathers application tests', () => {
     );
   });
 
-  describe('404', function() {
-    it('shows a 404 HTML page', () => {
-      return rp({
-        url: getUrl('path/to/nowhere'),
-        headers: {
-          'Accept': 'text/html'
-        }
-      }).catch(res => {
-        assert.equal(res.statusCode, 404);
-        assert.ok(res.error.indexOf('<html>') !== -1);
-      });
+  describe('Authentication', function() {
+    let newUser, accessToken;
+    
+    newUser = {
+      email: faker.internet.email(),
+      password: faker.internet.password()
+    };
+
+    Console.info('Testing with random credentials', newUser);
+    
+    it('shows a 401 for an unauthenticated user', () => {
+      return client.get('/room')
+        .catch(err => {
+          assert.equal(err.response.status, 401);
+        });
+    });
+    
+    it('creates a new user', () => {
+      return client.post('/users', newUser)
+        .then(res => {
+          assert.equal(res.status, 201);
+        });
+    });
+    
+    it('authenticates the new user', () => {
+      const payload = {
+        'strategy': 'local',
+        'email': newUser.email,
+        'password': newUser.password
+      };
+      
+      return client.post('/authentication', payload)
+        .then(res => {
+          accessToken = res.data.accessToken;
+          assert.equal(res.status, 201);
+        });
+    });
+    
+    it('authenticates the new token', () => {
+      return client.get('/room', {headers: {'Authorization': 'bearer ' + accessToken} })
+        .then(res => {
+          assert.equal(res.status, 200);
+        });
+    });
+    
+    it('logs out', () => {
+      return client.delete('/authentication', {headers: {'Authorization': 'bearer ' + accessToken} })
+        .then(res => {
+          assert.equal(res.status, 200);
+        });
+    });
+    
+    it('does not authenticate the new token', () => {
+      return client.get('/room', {headers: {'Authorization': 'bearer ' + accessToken} })
+        .then(res => {
+          assert.equal(res.status, 200);
+        });
     });
 
-    it('shows a 404 JSON error without stack trace', () => {
-      return rp({
-        url: getUrl('path/to/nowhere'),
-        json: true
-      }).catch(res => {
-        assert.equal(res.statusCode, 404);
-        assert.equal(res.error.code, 404);
-        assert.equal(res.error.message, 'Page not found');
-        assert.equal(res.error.name, 'NotFound');
-      });
-    });
   });
 });
