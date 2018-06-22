@@ -14,7 +14,10 @@ module.exports = function karmaConfig(config) {
     browsers: ['PhantomJS'],
     frameworks: ['mocha', 'sinon-chai', 'phantomjs-shim'],
     reporters: ['spec', 'coverage'],
-    files: ['./index.js'],
+    files: [
+      '../../node_modules/phantomjs-polyfill-array-from/array-from-polyfill.js',
+      './index.js'
+      ],
     preprocessors: {
       './index.js': ['webpack', 'sourcemap'],
     },
