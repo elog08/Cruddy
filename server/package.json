@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "cruddy-server",
   "description": "The FeathersJS Back-end for Cruddy",
   "version": "0.0.0",
   "homepage": "",

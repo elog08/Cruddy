@@ -32,8 +32,10 @@ describe('Feathers application tests', () => {
   });
 
   it('starts and shows the index page', () => {
-    return rp(getUrl()).then(body =>
-      assert.ok(body.indexOf('<html>') !== -1)
+    return rp(getUrl()).then(body => {
+      assert.ok(body.indexOf('<html>') !== -1);
+      assert.ok(body.indexOf('<title>Cruddy API</title>') !== -1);
+    }
     );
   });
 
