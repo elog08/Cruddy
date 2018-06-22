@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --host 0.0.0.0 --config build/webpack.dev.conf.js ",
-    "start": "if-env NODE_ENV=production && npm run build || npm run prod",
+    "start": "if-env NODE_ENV=production && npm run dev || npm run prod",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit",
