@@ -4,6 +4,9 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+package-lock.json
+
+*.sqlite
 
 # Cloud 9 IDE
 .c9
