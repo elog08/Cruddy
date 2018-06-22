@@ -8,10 +8,26 @@ A Simple CRUD App Starter, built with FeathersJS and VueJS
 
 ## Development Stack
 
+Run the pre-check script
+```
+cd scripts && sh pre-check.sh
+```
+
+or
+
 Install the following global tools:
 
 ```
 npm install -g @feathersjs/cli @vue/cli pm2
+```
+
+### Test Dependencies
+
+To make sure you have all the right libs to run the stack, run the following script:
+
+```
+cd scripts && sh test-dependencies.sh
+
 ```
 
 ### Running Locally
