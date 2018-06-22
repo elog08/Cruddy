@@ -1,26 +1,28 @@
 {
   "name": "cruddy-client",
   "version": "1.0.0",
-  "description": "The VueJS Client for Cruddy",
-  "author": "Eyasu Kifle",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --host 0.0.0.0 --config build/webpack.dev.conf.js ",
-    "start": "if-env NODE_ENV=production && npm run dev || npm run prod",
-    "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
-    "e2e": "node test/e2e/runner.js",
-    "test": "npm run unit",
-    "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
     "build": "node build/build.js",
+    "test": "npm run unit",
+    "e2e": "node test/e2e/runner.js",
+    "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs --fix",
+    "dev": "webpack-dev-server --inline --progress --host 0.0.0.0 --config build/webpack.dev.conf.js ",
+    "start": "if-env NODE_ENV=production && npm run prod || npm run dev",
+    "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "prod": "npm run build && node server.js"
   },
   "dependencies": {
     "express": "^4.16.3",
+    "feathers-vuex": "^1.4.3",
     "http-proxy-middleware": "^0.18.0",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuetify": "^1.0.19",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@babel/polyfill": "^7.0.0-beta.49",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^8.2.1",
@@ -80,6 +82,7 @@
     "sinon-chai": "^2.8.0",
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
+    "vue-cli-plugin-vuetify": "^0.1.6",
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
@@ -88,13 +91,15 @@
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.0"
   },
-  "engines": {
-    "node": ">= 6.0.0",
-    "npm": ">= 3.0.0"
-  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "description": "The VueJS Client for Cruddy",
+  "author": "Eyasu Kifle",
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  }
 }
