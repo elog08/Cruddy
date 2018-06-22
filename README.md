@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/elog08/Cruddy.svg?branch=master)](https://travis-ci.org/elog08/Cruddy)
 # Cruddy
 A Simple CRUD App Starter, built with FeathersJS and VueJS
 
