@@ -14,7 +14,7 @@ cd client;
 rm -rf node_modules;
 rm -rf dist;
 npm install;
-npm test;
+npm test || exit 1
 
 cd ../
 
@@ -22,4 +22,4 @@ cd ../
 cd server;
 rm -rf node_modules;
 npm install;
-npm test;
+npm test || exit 1
