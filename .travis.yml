@@ -4,4 +4,4 @@ language: node_js
 node_js: 
   - "8"
 script: 
-  - "cd scripts && sh *.sh"
+  - "cd scripts && sh test-dependencies.sh"
