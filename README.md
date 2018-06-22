@@ -9,8 +9,29 @@ A Simple CRUD App Starter, built with FeathersJS and VueJS
 ```
 git clone https://github.com/elog08/Cruddy.git;
 cd Cruddy/;
+```
+
+If using Node Version Manager
+```
+cd scripts && sh pre-check.sh && cd ../;
+```
+
+else, elevate to sudo privilege
+
+```
 cd scripts && sudo sh pre-check.sh && cd ../;
-cd scripts && sudo sh test-dependencies.sh && cd ../;
+```
+
+Install and test dependencies
+
+```
+cd scripts && sh test-dependencies.sh && cd ../;
+
+```
+
+Launch
+
+```
 pm2 start ecosystem.config.js;
 pm2 logs;
 ```
