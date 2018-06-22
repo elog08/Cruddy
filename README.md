@@ -2,13 +2,39 @@
 # Cruddy
 A Simple CRUD App Starter, built with FeathersJS and VueJS
 
-## Requirements
 
+
+# Quick Start
+
+```
+git clone https://github.com/elog08/Cruddy.git;
+cd Cruddy/;
+cd scripts && sudo sh pre-check.sh && cd ../;
+cd scripts && sudo sh test-dependencies.sh && cd ../;
+pm2 start ecosystem.config.js;
+pm2 logs;
+```
+
+If all goes well, it should start 2 servers.
+
+The Client Server listens on 0.0.0.0:8080
+The API Server listens on 0.0.0.0:8081
+
+**Go to `http://localhost:8080/` to access the App.**
+*You will also be able to access the API from within the client using `http://localhost:8080/api/`. This prevents annoying CORS issues.*
+
+
+## Detailed Steps
+
+## Requirements
 - Node 8+
+- MacOS or Linux (not tested on Win)
+ 
 
 ## Development Stack
 
 Run the pre-check script
+
 ```
 cd scripts && sh pre-check.sh
 ```
