@@ -1,10 +1,10 @@
 import Vue from 'vue';
-import HomePage from '@/components/HomePage';
+import Home from '@/views/Home';
 import { expect } from 'chai';
 
-describe('HomePage.vue', () => {
+describe('Home.vue', () => {
   it('should render correct contents', () => {
-    const Constructor = Vue.extend(HomePage);
+    const Constructor = Vue.extend(Home);
     const vm = new Constructor().$mount();
     expect(vm.$el.querySelector('.hello h1').textContent)
       .to.equal('Welcome to Cruddy');

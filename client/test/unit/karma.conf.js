@@ -16,8 +16,8 @@ module.exports = function karmaConfig(config) {
     reporters: ['spec', 'coverage'],
     files: [
       '../../node_modules/phantomjs-polyfill-array-from/array-from-polyfill.js',
-      './index.js'
-      ],
+      './index.js',
+    ],
     preprocessors: {
       './index.js': ['webpack', 'sourcemap'],
     },
