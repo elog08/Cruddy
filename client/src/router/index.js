@@ -14,18 +14,18 @@ export default new Router({
       name: 'Home',
       component: Home,
       meta: {
-        breadcrumb: 'Home'
+        breadcrumb: 'Home',
       },
       children: [
-        
-      ]
+
+      ],
     },
     {
       path: '/dashboard',
       name: 'Dashboard',
       component: Dashboard,
       meta: {
-        breadcrumb: 'Dashboard'
+        breadcrumb: 'Dashboard',
       },
     },
     {
@@ -33,7 +33,7 @@ export default new Router({
       name: 'Login',
       component: Login,
       meta: {
-        breadcrumb: 'Login'
+        breadcrumb: 'Login',
       },
     },
     {
@@ -41,7 +41,7 @@ export default new Router({
       name: 'Register',
       component: Register,
       meta: {
-        breadcrumb: 'Register'
+        breadcrumb: 'Register',
       },
     },
   ],
