@@ -2,9 +2,11 @@
 # Cruddy
 A Simple CRUD App Starter, built with FeathersJS and VueJS
 
+## What and Why
 
+The purpose of Cruddy is to provide re-usable solutions for common problems that occur in Client / Server Realtime Applications.
 
-# Quick Start
+## Quick Start
 
 ```
 git clone https://github.com/elog08/Cruddy.git;

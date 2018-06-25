@@ -1,0 +1,20 @@
+<template>
+  <b-row>
+        <b-col></b-col>
+        <b-col>
+          <h1 class="text-center">Login</h1>
+          <login-form />
+        </b-col>
+        <b-col></b-col>
+  </b-row>
+</template>
+<script>
+import LoginForm from '../components/LoginForm';
+
+export default ({
+  name: 'login',
+  components: {
+    'login-form': LoginForm,
+  },
+});
+</script>

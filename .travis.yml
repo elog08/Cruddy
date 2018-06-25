@@ -1,3 +1,7 @@
+dist: trusty
+before_script:
+    - "sudo chown root /opt/google/chrome/chrome-sandbox"
+    - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
 before_install: 
   - "npm i -g pm2"
 language: node_js
@@ -5,3 +9,5 @@ node_js:
   - "8"
 script: 
   - "cd scripts && sh test-dependencies.sh"
+addons:
+  - chrome: stable
