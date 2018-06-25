@@ -2,7 +2,7 @@ const assert = require('assert');
 const rp = require('request-promise');
 const axios = require('axios');
 const faker = require('faker');
-
+const jwtDecode = require('jwt-decode');
 const url = require('url');
 const app = require('../src/app');
 
@@ -44,6 +44,7 @@ describe('Feathers application tests', () => {
     
     newUser = {
       email: faker.internet.email(),
+      username: faker.internet.userName().toLowerCase(),
       password: faker.internet.password()
     };
 
@@ -77,6 +78,15 @@ describe('Feathers application tests', () => {
         });
     });
     
+    it('gets the user profile', () => {
+      const { userId } = jwtDecode(accessToken);
+      return client.get(`/users/${userId}`, {headers: {'Authorization': 'bearer ' + accessToken} })
+        .then(res => {
+          assert.equal(res.data.username, newUser.username);
+          assert.equal(res.status, 200);
+        });
+    });
+    
     it('authenticates the new token', () => {
       return client.get('/room', {headers: {'Authorization': 'bearer ' + accessToken} })
         .then(res => {
@@ -90,13 +100,7 @@ describe('Feathers application tests', () => {
           assert.equal(res.status, 200);
         });
     });
-    
-    it('does not authenticate the new token', () => {
-      return client.get('/room', {headers: {'Authorization': 'bearer ' + accessToken} })
-        .then(res => {
-          assert.equal(res.status, 200);
-        });
-    });
+
 
   });
 });

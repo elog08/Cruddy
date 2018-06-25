@@ -1,5 +1,11 @@
 {
   "host": "server-app.feathersjs.com",
   "port": "PORT",
-  "nedb": "../testdata"
+  "nedb": "../testdata",
+  "sqlite": {
+    "client": "sqlite3",
+    "connection": {
+      "filename": "data/test.sqlite"
+    }
+  }
 }
