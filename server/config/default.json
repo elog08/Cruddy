@@ -34,7 +34,7 @@
   "sqlite": {
     "client": "sqlite3",
     "connection": {
-      "filename": "data/server.sqlite"
+      "filename": "../data/server.sqlite"
     }
   }
 }
