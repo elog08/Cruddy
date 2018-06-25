@@ -5,3 +5,6 @@ node_js:
   - "8"
 script: 
   - "cd scripts && sh test-dependencies.sh"
+addons:
+  - firefox: "60.0"
+  - chrome: stable
