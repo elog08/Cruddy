@@ -1,18 +1,36 @@
 <template>
           <div class="panel-body">
-            <form>
+            <auth-error/>
+            <form v-on:submit.prevent="doLogin">
               <vue-form-generator :schema="schema" :model="model" :options="formOptions">
               </vue-form-generator>
             </form>
           </div>
 </template>
 <script>
+import { mapActions } from 'vuex';
+import AuthError from '../components/AuthError';
+
 export default ({
   name: 'login-form',
+  components: {
+    'auth-error': AuthError,
+  },
+  methods: {
+    ...mapActions({ authenticate: 'auth/authenticate' }),
+    doLogin() {
+      const { email, password } = this.model;
+      this.authenticate({ email, password, strategy: 'local' }).then(() => {
+        this.$emit('login_success');
+      }, () => {
+        this.$emit('login_failure');
+      });
+    },
+  },
   data() {
     return {
       model: {
-        email: 'name@example.com',
+        email: '',
         password: '',
       },
       schema: {
@@ -22,6 +40,7 @@ export default ({
             type: 'input',
             inputType: 'email',
             label: 'Email',
+            required: true,
             model: 'email',
             placeholder: 'user@example.org',
           },
@@ -29,6 +48,7 @@ export default ({
             type: 'input',
             inputType: 'password',
             label: 'Password',
+            required: true,
             model: 'password',
             placeholder: 'Password',
           },

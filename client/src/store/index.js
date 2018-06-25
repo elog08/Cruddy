@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import feathersVuex from 'feathers-vuex';
-// import initConnection from '../utils/connection';
 import VueSocketio from 'vue-socket.io';
 import io from 'socket.io-client';
 
@@ -14,19 +13,6 @@ const { service, auth, FeathersVuex } = feathersVuex(feathersClient, { idField: 
 
 Vue.use(Vuex);
 Vue.use(FeathersVuex);
-
-// const Console = console;
-// Console.info(feathersClient.socket);
-// socket.on('connect', Console.info);
-// socket.on('disconnect', Console.info);
-// socket.on('connect_error', Console.info);
-// socket.on('connect_timeout', Console.info);
-// socket.on('error', Console.info);
-// socket.on('ping', Console.info);
-
-// setTimeout(async () => {
-//   await feathersClient.authenticate();
-// }, 4000);
 
 const rootStore = new Vuex.Store({
   state: {

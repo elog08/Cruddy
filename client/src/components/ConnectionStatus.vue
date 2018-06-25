@@ -1,8 +1,16 @@
 <template>
-        <b-alert class="fixed-bottom" :variant="status.type" :dismissable="status.dismissable" show>{{status.message}}</b-alert>
+        <b-alert id="connectionStatus" class="fixed-bottom"
+            :variant="status.type"
+            :dismissable="status.dismissable"
+            show>{{status.message}}
+        </b-alert>
 </template>
+<style>
+  #connectionStatus {
+    width: 130px;
+  }
+</style>
 <script>
-
 export default {
   computed: {
     status() {
