@@ -17,6 +17,11 @@
         <b-dropdown-item @click="logout" href="#">Signout</b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
+    
+    <b-navbar-nav v-if="user">
+      <b-nav-item to="/dashboard">Dashboard</b-nav-item>
+      <b-nav-item to="/report/list">Reports</b-nav-item>
+    </b-navbar-nav>
     <b-navbar-nav v-else>
       <b-nav-item to="/login">Login</b-nav-item>
       <b-nav-item to="/register">Register</b-nav-item>

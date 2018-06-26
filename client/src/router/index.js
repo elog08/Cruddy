@@ -4,6 +4,8 @@ import Home from '@/views/Home';
 import Dashboard from '@/views/Dashboard';
 import Login from '@/views/Login';
 import Register from '@/views/Register';
+import CreateForm from '@/components/crud/CreateForm';
+import ListView from '@/components/crud/ListView';
 
 Vue.use(Router);
 
@@ -13,6 +15,7 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home,
+      title: Home,
       meta: {
         breadcrumb: 'Home',
       },
@@ -24,6 +27,7 @@ export default new Router({
       path: '/dashboard',
       name: 'Dashboard',
       component: Dashboard,
+      title: Dashboard,
       meta: {
         breadcrumb: 'Dashboard',
       },
@@ -31,6 +35,7 @@ export default new Router({
     {
       path: '/login',
       name: 'Login',
+      title: 'Login',
       component: Login,
       meta: {
         breadcrumb: 'Login',
@@ -39,9 +44,28 @@ export default new Router({
     {
       path: '/register',
       name: 'Register',
+      title: 'Register',
       component: Register,
       meta: {
         breadcrumb: 'Register',
+      },
+    },
+    {
+      path: '/report/create',
+      name: 'CreateForm',
+      title: 'Create Report',
+      component: CreateForm,
+      meta: {
+        breadcrumb: 'CreateForm',
+      },
+    },
+    {
+      path: '/report/list',
+      name: 'ListView',
+      title: 'List Reports',
+      component: ListView,
+      meta: {
+        breadcrumb: 'ListView',
       },
     },
   ],

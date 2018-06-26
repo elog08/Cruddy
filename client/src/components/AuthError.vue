@@ -1,5 +1,5 @@
 <template>
-    <b-alert show="auth.type==='FeathersError" variant="danger">
+    <b-alert show="auth.type==='FeathersError'" variant="danger">
       {{authError && authError.message}}
     </b-alert>
 </template>

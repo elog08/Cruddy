@@ -1,7 +1,6 @@
 <template>
         <b-alert id="connectionStatus" class="fixed-bottom"
             :variant="status.type"
-            :dismissable="status.dismissable"
             show>{{status.message}}
         </b-alert>
 </template>

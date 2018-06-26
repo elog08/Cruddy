@@ -3,7 +3,7 @@
         <b-col></b-col>
         <b-col>
           <h1 class="text-center">Login</h1>
-          <login-form />
+          <login-form v-on:login_success="$router.push('dashboard')"/>
         </b-col>
         <b-col></b-col>
   </b-row>
