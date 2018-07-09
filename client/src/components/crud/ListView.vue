@@ -3,12 +3,12 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 
 
 export default {
   methods: {
-      ...mapActions({ getReports: 'report/find' }),
+    ...mapActions({ getReports: 'report/find' }),
     feathersProvider(ctx) {
       // Here we don't set isBusy prop, so busy state will be handled by table itself
       // this.isBusy = true
@@ -23,7 +23,7 @@ export default {
       const $skip = perPage * currentPage || 0;
 
       const query = { $sort, $limit, $skip };
-      
+
       return this.getReports({ query }).then((result) => {
         const items = result.data;
         console.info('Got', items);

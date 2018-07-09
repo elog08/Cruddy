@@ -1,6 +1,6 @@
 <template>
           <div class="panel-body">
-            <b-alert show="registerError.type==='FeathersError" variant="danger">
+            <b-alert :show="registerError && registerError.type==='FeathersError'" variant="danger">
               {{registerError && registerError.message}}
             </b-alert>
             <form v-on:submit.prevent="doRegister">
