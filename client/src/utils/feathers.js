@@ -7,8 +7,6 @@ function initialize({ socket }) {
     .configure(socketio(socket))
     .configure(auth({ storage: window.localStorage }));
 
-  app.authenticate();
-
   return app;
 }
 export default initialize;

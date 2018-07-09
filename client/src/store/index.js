@@ -2,22 +2,24 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import feathersVuex from 'feathers-vuex';
 import VueSocketio from 'vue-socket.io';
-import VuexPersistence from 'vuex-persist'
+import VuexPersistence from 'vuex-persist';
 import io from 'socket.io-client';
 
 import initFeathers from '../utils/feathers';
+import { initialAuthenticate } from '../utils/auth';
 
 const socket = io('/', { path: '/api/socket.io' });
 
-const vuexLocal = new VuexPersistence({
-    storage: window.localStorage
-})
+// const vuexLocal = new VuexPersistence({
+//   storage: window.localStorage,
+// });
 
 const feathersClient = initFeathers({ socket });
 const { service, auth, FeathersVuex } = feathersVuex(feathersClient, { idField: '_id' });
 
 Vue.use(Vuex);
 Vue.use(FeathersVuex);
+
 
 const rootStore = new Vuex.Store({
   state: {
@@ -27,6 +29,8 @@ const rootStore = new Vuex.Store({
     },
   },
   getters: {
+    getLoggedInState: state => state.isLoggedIn,
+    getCurrentUser: state => state.users.copy,
     getConnectionStatus: state => (state.connection.status ? { variant: 'success', message: 'Connected!', dismissible: true } : { variant: 'danger', message: 'Disconnected!', dismissable: false }),
   },
   mutations: {
@@ -44,7 +48,7 @@ const rootStore = new Vuex.Store({
     },
   },
   plugins: [
-    vuexLocal.plugin,
+    // vuexLocal.plugin,
     service('report', {
       debug: true,
     }),
@@ -52,6 +56,12 @@ const rootStore = new Vuex.Store({
     auth({ userService: 'users' }),
   ],
 });
+
+(async () => {
+  const userId = await initialAuthenticate(feathersClient);
+  rootStore.commit('SET_LOGIN', true);
+  rootStore.dispatch('users/get', userId).then(console.log, console.error);
+})();
 
 
 Vue.use(VueSocketio, socket, rootStore);
