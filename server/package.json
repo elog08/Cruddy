@@ -25,7 +25,7 @@
     "test": "npm run eslint && npm run mocha",
     "eslint": "eslint src/. test/. --config .eslintrc.json --fix",
     "start": "node src/",
-    "mocha": "mocha test/ --recursive --exit"
+    "mocha": "mocha test/ --harmony --recursive --exit"
   },
   "dependencies": {
     "@feathersjs/authentication": "^2.1.6",
