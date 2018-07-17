@@ -1,7 +1,11 @@
 <template>
-    <b-alert show="auth.type==='FeathersError" variant="danger">
-      {{authError && authError.message}}
+  <div :if="isVisible">
+    <b-alert
+      :class="msgClass"
+        variant="danger">
+      {{message}}
     </b-alert>
+  </div>
 </template>
 <script>
 import { mapState } from 'vuex';
@@ -9,10 +13,14 @@ import { mapState } from 'vuex';
 export default ({
   computed: {
     ...mapState(['auth']),
-    authError() {
-      return this.auth && this.auth.errorOnAuthenticate
-          && this.auth.errorOnAuthenticate.message.length > 0
-          && this.auth.errorOnAuthenticate;
+    isVisible() {
+      return !!this.auth.errorOnAuthenticate;
+    },
+    message() {
+      return this.isVisible && this.auth.errorOnAuthenticate.message || '';
+    },
+    msgClass() {
+      return this.isVisible && this.auth.errorOnAuthenticate.className || '';
     },
   },
 });

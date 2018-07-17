@@ -6,6 +6,7 @@ function initialize({ socket }) {
   const app = feathers()
     .configure(socketio(socket))
     .configure(auth({ storage: window.localStorage }));
+
   return app;
 }
 export default initialize;

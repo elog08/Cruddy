@@ -11,6 +11,8 @@
 import { mapActions } from 'vuex';
 import AuthError from '../components/AuthError';
 
+const Console = console;
+
 export default ({
   name: 'login-form',
   components: {
@@ -20,10 +22,15 @@ export default ({
     ...mapActions({ authenticate: 'auth/authenticate' }),
     doLogin() {
       const { email, password } = this.model;
-      this.authenticate({ email, password, strategy: 'local' }).then(() => {
+      this.authenticate({ email, password, strategy: 'local' }).then((res) => {
+        Console.info('doLogin', { res });
+        this.$store.commit('SET_LOGIN');
         this.$emit('login_success');
-      }, () => {
+        return Promise.resolve(res);
+      }, (err) => {
+        Console.info('doLogin', 'failure', { err });
         this.$emit('login_failure');
+        return Promise.reject(err);
       });
     },
   },
