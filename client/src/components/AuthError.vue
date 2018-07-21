@@ -1,11 +1,10 @@
 <template>
-  <div :if="isVisible">
     <b-alert
+      :show="isVisible"
       :class="msgClass"
         variant="danger">
       {{message}}
     </b-alert>
-  </div>
 </template>
 <script>
 import { mapState } from 'vuex';

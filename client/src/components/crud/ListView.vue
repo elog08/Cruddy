@@ -20,7 +20,7 @@ export default {
 
       const $limit = perPage || 100;
 
-      const $skip = perPage * currentPage || 0;
+      const $skip = perPage * (currentPage - 1) || 0;
 
       const query = { $sort, $limit, $skip };
 

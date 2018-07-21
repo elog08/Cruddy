@@ -14,7 +14,8 @@ export default ({
   methods: {
     ...mapActions({ create: 'report/create' }),
     doCreate() {
-      this.create(this.model).then(() => {
+      this.create(this.model).then((result) => {
+        console.info({result});
         this.$emit('create_success');
       }, () => {
         this.$emit('create_failure');
