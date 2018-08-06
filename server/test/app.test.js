@@ -192,7 +192,6 @@ describe('Feathers application tests', () => {
           assert.equal(res.status, 200);
         });
     });
-
-
+    
   });
 });
