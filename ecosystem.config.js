@@ -23,8 +23,8 @@ module.exports = {
     // Server
     {
       name      : 'cruddy-server',
-      script    : './src/index.js',
-      watch     :  './src/',
+      script    : 'npm',
+      args:    'start',
       cwd       : 'server',
       env: {
         NODE_ENV: 'development',
