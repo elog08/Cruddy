@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import feathersVuex from 'feathers-vuex';
 import VueSocketio from 'vue-socket.io';
-import VuexPersistence from 'vuex-persist';
 import io from 'socket.io-client';
 
 import initFeathers from '../utils/feathers';
@@ -53,6 +52,7 @@ const rootStore = new Vuex.Store({
       debug: true,
     }),
     service('users'),
+    service('symptom'),
     auth({ userService: 'users' }),
   ],
 });
@@ -61,6 +61,7 @@ const rootStore = new Vuex.Store({
   const userId = await initialAuthenticate(feathersClient);
   rootStore.commit('SET_LOGIN', true);
   rootStore.dispatch('users/get', userId).then(console.log, console.error);
+
 })();
 
 

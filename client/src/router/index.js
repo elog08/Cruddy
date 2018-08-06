@@ -6,6 +6,7 @@ import Login from '@/views/Login';
 import Register from '@/views/Register';
 import CreateForm from '@/components/crud/CreateForm';
 import ListView from '@/components/crud/ListView';
+import Symptoms from '@/views/Symptoms';
 
 Vue.use(Router);
 
@@ -22,6 +23,15 @@ export default new Router({
       children: [
 
       ],
+    },
+    {
+      path: '/symptoms',
+      name: 'Symptoms',
+      component: Symptoms,
+      title: Symptoms,
+      meta: {
+        breadcrumb: 'Symptoms',
+      },
     },
     {
       path: '/dashboard',

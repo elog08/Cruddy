@@ -3,6 +3,8 @@
   <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
   <b-navbar-brand href="#">Cruddy</b-navbar-brand>
   <b-collapse is-nav id="nav_collapse">
+<b-nav-item to="/symptoms">Symptoms</b-nav-item>
+
 
     <!-- Right aligned nav items -->
     <b-navbar-nav v-if="isLoggedIn && user" class="ml-auto">
