@@ -9,13 +9,12 @@ module.exports = {
     {
       name      : 'cruddy-client',
       script    : 'npm',
-      args      : 'start',
+      args      : 'run prod',
       cwd       : 'client',
       env: {
-        NODE_ENV: 'development',
         PORT    : 8080
       },
-      env_prod: {
+      env_production: {
         NODE_ENV: 'production',
         PORT    : 8080
       }
@@ -27,10 +26,9 @@ module.exports = {
       args:    'start',
       cwd       : 'server',
       env: {
-        NODE_ENV: 'development',
         PORT    : 8081
       },
-      env: {
+      env_production: {
         NODE_ENV: 'production',
         PORT    : 8081
       }
