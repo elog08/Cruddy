@@ -35,7 +35,9 @@ const fakeReport = () => ({
   message: faker.lorem.sentence(),
 });
 
-describe('Feathers application tests', () => {
+describe('Feathers application tests', function() {
+  this.timeout(5000);
+
   before(function(done) {
     this.server = app.listen(port);
     this.server.once('listening', () => done());
