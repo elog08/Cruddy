@@ -108,5 +108,19 @@ This will start:
 
 Use Nginx to serve the static files and Proxy-pass `/api` to a PM2 cluster running the server.
 
+#### Docker
+
+Build your own image. 
+
+```
+docker build -t yourhandle/cruddy .
+```
+
+Run
+```
+docker run -p 8080:8080 yourhandle/cruddy
+```
+
+- TODO: Optimize Docker build
 - TODO: Nginx.conf example
-- TODO: Dockerize
+
