@@ -10,5 +10,5 @@ ENV NPM_CONFIG_LOGLEVEL warn
 ENV SKIP_TEST=true
 RUN cd scripts && sh test-dependencies.sh
 
-EXPOSE 8080
+EXPOSE 80
 CMD [ "pm2-runtime", "start", "ecosystem.config.js", "--env", "production" ]

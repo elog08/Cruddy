@@ -118,7 +118,7 @@ docker build -t yourhandle/cruddy .
 
 Run
 ```
-docker run -p 8080:8080 yourhandle/cruddy
+docker run -p 80:80 yourhandle/cruddy
 ```
 
 - TODO: Optimize Docker build
