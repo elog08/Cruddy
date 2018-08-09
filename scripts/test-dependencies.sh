@@ -14,12 +14,11 @@ cd client;
 rm -rf node_modules;
 rm -rf dist;
 npm install;
-npm test || exit 1
 
 cd ../
 
 # Test the server is sane
 cd server;
 rm -rf node_modules;
-npm install;
-npm test || exit 1
+npm install || npm install;
+[[ $NODE_ENV = "SKIP_TEST" ]] || npm test || exit 1
