@@ -18,7 +18,7 @@ const getUrl = pathname => url.format({
 
 const client = axios.create({
   baseURL: getUrl(''),
-  timeout: 1000
+  timeout: 5000
 });
 
 
