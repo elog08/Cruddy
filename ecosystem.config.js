@@ -9,7 +9,7 @@ module.exports = {
     {
       name      : 'cruddy-client',
       script    : 'npm',
-      args      : 'run prod',
+      args      : 'start',
       cwd       : 'client',
       env: {
         PORT    : 8080
