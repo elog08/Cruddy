@@ -2,6 +2,8 @@
   <div :if="isVisible">
     <b-alert
       :class="msgClass"
+      :show="isVisible"
+      dismissible
         variant="danger">
       {{message}}
     </b-alert>
