@@ -1,9 +1,6 @@
 <template>
 <div>
     <h1>Reports</h1>
-  
-    
-  
     <report-list v-on:edit="showEditModal"/>
   <b-btn  @click="showCreateModal">Create</b-btn>
   <b-modal ok-disabled cancel-disabled ref="modalCreate">
@@ -26,12 +23,12 @@
            Close
          </b-btn>
     </div>
-    <edit-form :item="toEdit" v-on:success="hideEditModal"/>
+    <edit-form :item="currentReport" v-on:success="hideEditModal"/>
   </b-modal>
 </div>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 import CreateForm from '../components/reports/CreateForm';
 import EditForm from '../components/reports/EditForm';
 import ListView from '../components/reports/ListView';
@@ -40,20 +37,17 @@ export default {
   name: 'Profile',
   components: { 'create-form': CreateForm , 'edit-form': EditForm , 'report-list': ListView },
   computed: {
-    ...mapGetters({ user: 'getCurrentUser' }),
-  },
-  data: {
-    toEdit: null
+    ...mapGetters({ currentReport: 'report/current' }),
   },
   methods: {
-    ...mapActions({ update: 'users/update'}),
+    ...mapActions({ update: 'report/update'}),
+    ...mapMutations({setCurrent: 'report/setCurrent'}),
     showCreateModal () {
       this.$refs.modalCreate.show()
     },
     showEditModal ({item}) {
-      console.dir(item);
-      this.toEdit = JSON.parse(JSON.stringify(item));
-      this.$refs.modalEdit.show()
+      this.setCurrent(item._id);
+      this.$refs.modalEdit.show();
     },
     hideCreateModal () {
       this.$refs.modalCreate.hide()

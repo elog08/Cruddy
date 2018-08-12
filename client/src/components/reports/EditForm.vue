@@ -1,7 +1,7 @@
 <template>
   <div class="panel-body">
-    <form v-on:submit.prevent="doCreate">
-      <vue-form-generator :schema="schema" :model="model">
+    <form v-on:submit.prevent="doUpdate">
+      <vue-form-generator :schema="schema" :model="model" :options="formOptions">
       </vue-form-generator>
     </form>
   </div>
@@ -13,14 +13,19 @@ export default ({
   name: 'edit-form',
   props: {
     item: {
+        _id: "",
         title: "",
         description: ""
     },
   },
+  mounted() {
+    console.log('Props', this.item);
+  },
   methods: {
     ...mapActions({ update: 'report/update' }),
     doUpdate() {
-      this.update(this.model).then((result) => {
+      console.dir(this.model)
+      this.update([this.model._id, {...this.item, ...this.model}, {}]).then((result) => {
         this.$emit('success');
       }, () => {
         this.$emit('failure');
@@ -28,9 +33,16 @@ export default ({
     },
   },
 
+  watch: {
+    item: function(item) {
+      console.info("New item")
+      this.model = { _id: item._id, title: item.title, description: item.description };
+    }
+  },
+
   data() {
     return {
-      model: { title: '', description: '',  item: this.props.item },
+      model: { title: "", description: "", _id: "" },
       schema: {
         fields: [
           {
