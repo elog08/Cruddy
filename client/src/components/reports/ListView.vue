@@ -26,8 +26,15 @@ export default {
   },
   methods: {
     ...mapActions({ getReports: 'report/find', deleteReport: 'report/remove' }),
-    doDelete({_id}) {
-      this.deleteReport(_id);
+      doDelete({_id}) {
+        this.$dialog
+      .confirm('Please confirm to continue')
+      .then((dialog) => {
+          this.deleteReport(_id);
+      })
+      .catch(function() {
+    console.log('Clicked on cancel');
+  });
     },
     doEdit(item) {
       this.$emit('edit', {item});

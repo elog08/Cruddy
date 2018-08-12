@@ -5,6 +5,8 @@ import Vue from 'vue';
 import './plugins/bootstrap';
 import './plugins/formgenerator';
 import './plugins/breadcrumbs';
+import './plugins/dialog';
+
 import store from './store';
 
 import App from './App';
