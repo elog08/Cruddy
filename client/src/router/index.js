@@ -1,15 +1,16 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from '@/store';
 import Home from '@/views/Home';
 import Dashboard from '@/views/Dashboard';
 import Login from '@/views/Login';
 import Register from '@/views/Register';
-import CreateForm from '@/components/crud/CreateForm';
-import ListView from '@/components/crud/ListView';
+import Reports from '@/views/Reports';
+import Profile from '@/views/Profile';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -30,6 +31,7 @@ export default new Router({
       title: Dashboard,
       meta: {
         breadcrumb: 'Dashboard',
+        auth: true,
       },
     },
     {
@@ -51,22 +53,37 @@ export default new Router({
       },
     },
     {
-      path: '/report/create',
-      name: 'CreateForm',
-      title: 'Create Report',
-      component: CreateForm,
+      path: '/profile',
+      name: 'Profile',
+      title: 'Profile',
+      component: Profile,
       meta: {
-        breadcrumb: 'CreateForm',
+        breadcrumb: 'Profile',
+        auth: true,
       },
     },
     {
-      path: '/report/list',
-      name: 'ListView',
-      title: 'List Reports',
-      component: ListView,
+      path: '/reports',
+      name: 'Reports',
+      title: 'Reports',
+      component: Reports,
       meta: {
-        breadcrumb: 'ListView',
+        breadcrumb: 'Reports',
+        auth: true,
       },
     },
   ],
 });
+
+
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.auth);
+  console.log('Auth check', store.getters.getLoggedInState)
+  if (requiresAuth && !store.getters.getLoggedInState) {
+    next('/homepage');
+  } else {
+    next();
+  }
+});
+
+export default router;

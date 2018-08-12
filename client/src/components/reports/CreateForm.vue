@@ -14,10 +14,10 @@ export default ({
   methods: {
     ...mapActions({ create: 'report/create' }),
     doCreate() {
-      this.create(this.model).then(() => {
-        this.$emit('create_success');
+      this.create(this.model).then((result) => {
+        this.$emit('success');
       }, () => {
-        this.$emit('create_failure');
+        this.$emit('failure');
       });
     },
   },

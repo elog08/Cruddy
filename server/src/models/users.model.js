@@ -14,6 +14,7 @@ module.exports = function (app) {
         table.string('username').unique();
         table.string('email').unique();
         table.string('password');
+        table.string('name');
       
       
       })

@@ -61,7 +61,6 @@ const rootStore = new Vuex.Store({
   const userId = await initialAuthenticate(feathersClient);
   rootStore.commit('SET_LOGIN', true);
   rootStore.dispatch('users/get', userId).then(console.log, console.error);
-
 })();
 
 

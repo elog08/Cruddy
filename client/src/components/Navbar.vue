@@ -10,7 +10,7 @@
 
     <b-navbar-nav v-if="isLoggedIn">
       <b-nav-item to="/dashboard">Dashboard</b-nav-item>
-      <b-nav-item to="/report/list">Reports</b-nav-item>
+      <b-nav-item to="/reports">Reports</b-nav-item>
     </b-navbar-nav>
     <b-navbar-nav v-else>
       <b-nav-item to="/login">Login</b-nav-item>
@@ -22,8 +22,8 @@
         <template slot="button-content">
           <em>{{user.username}}</em>
         </template>
-        <b-dropdown-item href="#">Profile</b-dropdown-item>
-        <b-dropdown-item @click="logout" href="#">Signout</b-dropdown-item>
+        <b-dropdown-item to="/profile">Profile</b-dropdown-item>
+        <b-dropdown-item @click="logout" href="#">Log Out</b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
 
@@ -45,6 +45,7 @@ export default ({
       this.authLogout();
       this.clearUsers();
       this.unsetLogin();
+      this.$router.push({ name: 'Home' });
     },
   },
 });
