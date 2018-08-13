@@ -47,6 +47,14 @@ export default ({
             placeholder: 'subdomain.domain.com',
           },
           {
+            type: 'input',
+            inputType: 'text',
+            label: 'Email',
+            required: true,
+            model: 'email',
+            placeholder: 'admin@domain.com',
+          },
+          {
             type: 'submit',
             buttonText: 'Create',
           },
