@@ -91,7 +91,7 @@ class Service {
       return { id: result.data.Id, HostPort };
     }
     catch (e) {
-      Console.error("Error", e);
+      Console.error('Error', e);
       if (e.statusCode && e.statusCode === 500)
         new errors.GeneralError(new Error(e.message));
     }
