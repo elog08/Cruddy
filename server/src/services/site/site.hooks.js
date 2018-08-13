@@ -16,6 +16,13 @@ class SiteContainer {
     return hook;
   }
 
+  static async patchSite(hook) {
+    const theSite = await hook.app.service('site').get(hook.id);
+    const container = hook.app.service('container');
+    let theContainer = await container.patch(theSite.containerId, {}, {query: hook.params.query});
+    return hook;
+  }
+
   static async getSite(hook) {
     const container = hook.app.service('container');
     let theContainer = await container.get(hook.result.containerId);
@@ -34,12 +41,13 @@ class SiteContainer {
           hook.result.data[i].status = theContainer.data.State.Status;
         }
       }
+      console.info(hook.result);
     }
     return hook;
   }
 
   static async removeSite(hook) {
-    console.log('Remove site', hook.data, hook.id)
+    // console.log('Remove site', hook.data, hook.id);
     const theSite = await hook.app.service('site').get(hook.id);
     if(theSite.containerId)
     {
@@ -67,7 +75,7 @@ module.exports = {
     get: [SiteContainer.getSite],
     create: [],
     update: [],
-    patch: [],
+    patch: [SiteContainer.patchSite],
     remove: []
   },
 

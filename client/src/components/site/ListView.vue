@@ -6,8 +6,8 @@
       <span>{{row.item.status}}</span>
     </template>
     <template slot="containerId" slot-scope="row">
-      <b-button @click.stop="action(row.item, 'restart')">Restart</b-button>
-      <b-button @click.stop="action(row.item, 'stop')">Stop</b-button>
+      <b-button @click.stop="doAction(row.item, 'restart')">Restart</b-button>
+      <b-button @click.stop="doAction(row.item, 'stop')">Stop</b-button>
     </template>
     <template slot="id" slot-scope="row">
       <b-button @click.stop="doDelete(row.item)">Delete</b-button>
@@ -33,10 +33,11 @@ export default {
     this.getSites({ query: {} }).then(console.info, console.error)
   },
   methods: {
-    action(id, action) {
-      console.info(id, action);
+    doAction({_id}, action) {
+      console.info(_id, action);
+      this.patchSite([_id, {}, {query: {action}}]);
     },
-    ...mapActions({ getSites: 'site/find', deleteSite: 'site/remove' }),
+    ...mapActions({ getSites: 'site/find', deleteSite: 'site/remove', patchSite: 'site/patch' }),
       doDelete({_id}) {
         this.$dialog
           .confirm('Please confirm to continue')
