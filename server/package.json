@@ -22,7 +22,7 @@
     "npm": ">= 3.0.0"
   },
   "scripts": {
-    "test": "npm run eslint && npm run mocha",
+    "test": "NODE_ENV=test npm run eslint && npm run mocha",
     "eslint": "eslint src/. test/. --config .eslintrc.json --fix",
     "start": "node src/",
     "mocha": "mocha test/ --harmony --recursive --exit"
@@ -42,12 +42,16 @@
     "feathers-authentication-hooks": "^0.3.0",
     "feathers-knex": "^3.1.1",
     "feathers-nedb": "^3.0.1",
+    "get-port": "^4.0.0",
     "helmet": "^3.12.1",
     "jwt-decode": "^2.2.0",
     "knex": "^0.14.6",
     "nedb": "^1.8.0",
+    "node-docker-api": "^1.1.22",
     "serve-favicon": "^2.5.0",
     "sqlite3": "^4.0.0",
+    "stream-throttle": "^0.1.3",
+    "validator": "^10.5.0",
     "vuejs-dialog": "^1.3.0",
     "winston": "^3.0.0"
   },
