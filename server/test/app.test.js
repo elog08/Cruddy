@@ -35,9 +35,10 @@ const fakeReport = () => ({
   message: faker.lorem.sentence(),
 });
 
+const { invite_codes } = app.settings.application;
+
 describe('Feathers application tests', function() {
   this.timeout(5000);
-
   before(function(done) {
     this.server = app.listen(port);
     this.server.once('listening', () => done());
@@ -69,10 +70,19 @@ describe('Feathers application tests', function() {
         });
     });
     
-    it('creates a new user', () => {
-      return client.post('/users', newUser)
+    it ('creates a new user with a valid invite code', () => {
+      let newUserPayload = {...newUser, invite_code: invite_codes[0]};
+      return client.post('/users', newUserPayload)
         .then(res => {
           assert.equal(res.status, 201);
+        });
+    });
+
+    it ('does not create a new user without a valid invite code', () => {
+      let newUserPayload = {...newUser};
+      return client.post('/users', newUserPayload)
+        .catch(({response}) => {
+          assert.equal(response.status, 400);
         });
     });
     

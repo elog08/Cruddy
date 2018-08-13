@@ -1,27 +1,12 @@
-/* eslint-disable no-console */
+const NeDB = require('nedb');
+const path = require('path');
 
-// users-model.js - A KnexJS
-// 
-// See http://knexjs.org/
-// for more of what you can do here.
 module.exports = function (app) {
-  const db = app.get('knexClient');
-  const tableName = 'users';
-  db.schema.hasTable(tableName).then(exists => {
-    if(!exists) {
-      db.schema.createTable(tableName, table => {
-        table.increments('id');
-        table.string('username').unique();
-        table.string('email').unique();
-        table.string('password');
-        table.string('name');
-      
-      
-      })
-        .then(() => console.log(`Created ${tableName} table`))
-        .catch(e => console.error(`Error creating ${tableName} table`, e));
-    }
+  const dbPath = app.get('nedb');
+  const Model = new NeDB({
+    filename: path.join(dbPath, 'users.db'),
+    autoload: true
   });
 
-  return db;
+  return Model;
 };
