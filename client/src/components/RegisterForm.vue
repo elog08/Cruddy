@@ -23,8 +23,7 @@ export default ({
       createUser: 'create',
     }),
     doRegister() {
-      const { username, email, password } = this.model;
-      this.createUser({ username, email, password }).then(() => {
+      this.createUser(this.model).then(() => {
         this.$emit('register_success');
       }, () => {
         this.$emit('register_failure');
@@ -43,6 +42,7 @@ export default ({
         email: '',
         password: '',
         confirm: '',
+        invite_code: '',
       },
       schema: {
         legend: 'User Info',
@@ -84,6 +84,14 @@ export default ({
               }
               return true;
             },
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'Invitation Code',
+            required: true,
+            model: 'invite_code',
+            placeholder: 'ABC123$%',
           },
           {
             type: 'submit',
