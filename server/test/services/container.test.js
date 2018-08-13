@@ -1,10 +1,10 @@
 const assert = require('assert');
 const { expect } = require('chai');
 const app = require('../../src/app');
-const Console = console;
+// const Console = console;
 
 describe('\'container\' service', function () {
-  this.timeout(30000);
+  this.timeout(60000);
   const service = app.service('container');
   let container = null;
   let containerId = null;
