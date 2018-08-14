@@ -1,6 +1,6 @@
 <template>
-<div>Dashboard
-<site-list/>
+<div>
+  <site-list/>
   <b-btn  @click="showCreateModal">Create</b-btn>
   <b-modal ok-disabled cancel-disabled ref="modalCreate">
     <div slot="modal-title">
