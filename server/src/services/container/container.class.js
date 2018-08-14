@@ -58,7 +58,7 @@ class Service {
       
       // const [ stats ] = await Promise.all([pStats]);
       
-      return { data: details.data } //, stats };
+      return { data: details.data }; //, stats };
     }
     catch (e) {
       Console.error(e);

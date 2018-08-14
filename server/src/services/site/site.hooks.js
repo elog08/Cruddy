@@ -1,13 +1,14 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
 const { queryWithCurrentUser, restrictToOwner, associateCurrentUser } = require('feathers-authentication-hooks');
 const errors = require('@feathersjs/errors');
+const Console = console;
 
 // The field that is used on the report model to refer to the User object
 const userBinding = { idField: 'id', as: 'userId' };
 
 async function checkIfExists(hook) {
   if (hook.data.subdomain) {
-    const result = await hook.app.service('site').find({query: {subdomain: hook.data.subdomain}})
+    const result = await hook.app.service('site').find({query: {subdomain: hook.data.subdomain}});
     if (result.data.length > 0) {
       throw new errors.GeneralError(new Error('Subdomain Exists'));
     }
@@ -36,7 +37,7 @@ class SiteContainer {
   static async patchSite(hook) {
     const theSite = await hook.app.service('site').get(hook.id);
     const container = hook.app.service('container');
-    let theContainer = await container.patch(theSite.containerId, {}, {query: hook.params.query});
+    await container.patch(theSite.containerId, {}, {query: hook.params.query});
     return hook;
   }
 
@@ -56,24 +57,24 @@ class SiteContainer {
         if (containerId) {
           try {
             let theContainer = await container.get(containerId);
-            console.log(containerId, hook.result.data);
+            Console.log(containerId, hook.result.data);
             if (theContainer) {
               hook.result.data[i].status = theContainer.data.State.Status;
             } else {
               hook.result.data[i].status = 'not found';
             }
           } catch (e) {
-            console.error("Missing container", e.message)
+            Console.error('Missing container', e.message);
           }
         }
       }
-      console.info(hook.result);
+      Console.info(hook.result);
     }
     return hook;
   }
 
   static async removeSite(hook) {
-    // console.log('Remove site', hook.data, hook.id);
+    // Console.log('Remove site', hook.data, hook.id);
     const theSite = await hook.app.service('site').get(hook.id);
     if(theSite.containerId)
     {

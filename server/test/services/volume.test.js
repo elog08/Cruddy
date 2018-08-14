@@ -30,7 +30,7 @@ describe('\'volume\' service', function () {
       const volume = await service.get(volumeId);
       expect(volume).to.be.undefined;
     } catch (e) {
-      console.error(e);
+      Console.error(e);
     }
   });
 });

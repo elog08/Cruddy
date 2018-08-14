@@ -31,12 +31,12 @@ describe('site service', () => {
 
   it('creates a new site', async () => {
     let newSite = await Site.create(siteConfig);
-    expect(newSite._id).to.be.ok
+    expect(newSite._id).to.be.ok;
   });
 
   it('rejects sites with non-unique IDs', async () => {
     try {
-      let newSite = await Site.create(siteConfig);
+      await Site.create(siteConfig);
     } catch (e) {
       expect(e.message).to.be.ok;
     }
