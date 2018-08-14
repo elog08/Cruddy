@@ -7,6 +7,6 @@ module.exports = function (app) {
     filename: path.join(dbPath, 'site.db'),
     autoload: true
   });
-
+  Model.ensureIndex({ fieldName: 'subdomain', unique: true });
   return Model;
 };

@@ -1,17 +1,34 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
 const { queryWithCurrentUser, restrictToOwner, associateCurrentUser } = require('feathers-authentication-hooks');
+const errors = require('@feathersjs/errors');
 
 // The field that is used on the report model to refer to the User object
 const userBinding = { idField: 'id', as: 'userId' };
 
+async function checkIfExists(hook) {
+  if (hook.data.subdomain) {
+    const result = await hook.app.service('site').find({query: {subdomain: hook.data.subdomain}})
+    if (result.data.length > 0) {
+      throw new errors.GeneralError(new Error('Subdomain Exists'));
+    }
+  }
+}
+
 class SiteContainer {
   static async createSite(hook) {
     const container = hook.app.service('container');
-    let newSite = await container.create({image: 'yobasystems/alpine-grav', env: {
+    const volume = hook.app.service('volume');
+
+    let newVolume = await volume.create({});
+    newVolume = await volume.get(newVolume.id);
+    let newSite = await container.create({Image: 'elog08/tqfw', env: {
       'VIRTUAL_HOST': hook.data.subdomain,
       'LETSENCRYPT_HOST': hook.data.subdomain,
       'LETSENCRYPT_EMAIL': hook.data.email
+    }, binds: {
+      [newVolume.Name]:'/app/api/data'
     }});
+    hook.data.volumeId = newVolume.Name;
     hook.data.containerId = newSite.id;
     return hook;
   }
@@ -37,8 +54,17 @@ class SiteContainer {
       for (let i=0; i<hook.result.data.length; i++) {
         let containerId = hook.result.data[i].containerId;
         if (containerId) {
-          let theContainer = await container.get(containerId);
-          hook.result.data[i].status = theContainer.data.State.Status;
+          try {
+            let theContainer = await container.get(containerId);
+            console.log(containerId, hook.result.data);
+            if (theContainer) {
+              hook.result.data[i].status = theContainer.data.State.Status;
+            } else {
+              hook.result.data[i].status = 'not found';
+            }
+          } catch (e) {
+            console.error("Missing container", e.message)
+          }
         }
       }
       console.info(hook.result);
@@ -63,7 +89,7 @@ module.exports = {
     all: [ authenticate('jwt') ],
     find: [ queryWithCurrentUser(userBinding) ],
     get: [ restrictToOwner(userBinding) ],
-    create: [ associateCurrentUser(userBinding), SiteContainer.createSite ],
+    create: [ associateCurrentUser(userBinding), checkIfExists, SiteContainer.createSite ],
     update: [ restrictToOwner(userBinding) ],
     patch: [ restrictToOwner(userBinding) ],
     remove: [ restrictToOwner(userBinding), SiteContainer.removeSite ]
