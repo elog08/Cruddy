@@ -44,21 +44,21 @@ class Service {
     try {
       const container = await this.docker.container.get(id);
       const details = await container.status();
-      const inspect = await container.stats();
-      const pStats = (() => {
-        return new Promise((resolve, reject) => {
-          const statsHandler = stat => {
-            let json = JSON.parse(stat.toString(), null, ' ');
-            inspect.removeListener('data', statsHandler);
-            resolve(json);
-          };
-          inspect.once('data', statsHandler);
-        });
-      })();
+      // const inspect = await container.stats();
+      // const pStats = (() => {
+      //   return new Promise((resolve, reject) => {
+      //     const statsHandler = stat => {
+      //       let json = JSON.parse(stat.toString(), null, ' ');
+      //       inspect.removeListener('data', statsHandler);
+      //       resolve(json);
+      //     };
+      //     inspect.once('data', statsHandler);
+      //   });
+      // })();
       
-      const [ stats ] = await Promise.all([pStats]);
+      // const [ stats ] = await Promise.all([pStats]);
       
-      return { data: details.data, stats };
+      return { data: details.data } //, stats };
     }
     catch (e) {
       Console.error(e);
@@ -74,10 +74,7 @@ class Service {
     try {
       const port = await getPort();
       const HostPort = port + '';
-      const { image = 'hello-world', env = {} } = data;
-      const binds = {};
-
-      const Image = image;
+      const { Image = 'hello-world', env = {}, binds = {} } = data;
       const Env = Object.keys(env).map(k => `${k}=${(env[k])}`);
       const Binds= Object.keys(env).map(k => `${k}:${(binds[k])}`);
 
