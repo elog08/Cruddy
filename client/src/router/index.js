@@ -80,7 +80,7 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.auth);
   console.log('Auth check', store.getters.getLoggedInState)
   if (requiresAuth && !store.getters.getLoggedInState) {
-    next('/homepage');
+    next('/dashboard');
   } else {
     next();
   }

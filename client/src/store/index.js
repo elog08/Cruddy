@@ -57,6 +57,13 @@ const rootStore = new Vuex.Store({
   ],
 });
 
+// Synchronous Logged In State Check
+
+if (localStorage.getItem('feathers-jwt'))
+{
+  rootStore.commit('SET_LOGIN', true);
+}
+
 (async () => {
   const userId = await initialAuthenticate(feathersClient);
   rootStore.commit('SET_LOGIN', true);
