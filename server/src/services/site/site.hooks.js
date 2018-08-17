@@ -5,16 +5,17 @@ const errors = require('@feathersjs/errors');
 // The field that is used on the report model to refer to the User object
 const userBinding = { idField: 'id', as: 'userId' };
 
-async function checkIfExists(hook) {
-  if (hook.data.subdomain) {
-    const result = await hook.app.service('site').find({query: {subdomain: hook.data.subdomain}})
-    if (result.data.length > 0) {
-      throw new errors.GeneralError(new Error('Subdomain Exists'));
-    }
-  }
-}
+const md5 = require("apache-md5");
+
+var encryptedPassword = md5("mypass");
+
+console.log({encryptedPassword});
 
 class SiteContainer {
+  static async addPassword(hook) {
+
+  }
+
   static async createSite(hook) {
     const container = hook.app.service('container');
     const volume = hook.app.service('volume');
