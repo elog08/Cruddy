@@ -44,7 +44,7 @@ class Service {
       return Promise.all(data.map(current => this.create(current, params)));
     }
     try {
-      const config = { Name: 'volume_' + Date.now(), Driver: "local" }
+      const config = { Name: 'volume_' + Date.now(), Driver: 'local' };
       const volume = await this.docker.volume.create(config);
       return volume;
     }

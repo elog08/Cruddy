@@ -1,24 +1,37 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
 const { queryWithCurrentUser, restrictToOwner, associateCurrentUser } = require('feathers-authentication-hooks');
 const errors = require('@feathersjs/errors');
+const fs = require('fs-extra');
 
 // The field that is used on the report model to refer to the User object
 const userBinding = { idField: 'id', as: 'userId' };
 
-const md5 = require("apache-md5");
+const md5 = require('apache-md5');
+const Console = console;
 
-var encryptedPassword = md5("mypass");
-
-console.log({encryptedPassword});
+const HTPASSWD_DIR = './htpasswd';
 
 class SiteContainer {
-  static async addPassword(hook) {
+  static async setPassword(hook) {
+    const { basic_username = 'admin', basic_password, subdomain } = hook.data;
+    const file = `${HTPASSWD_DIR}/${subdomain}`;
+    
+    const htpasswd = `${basic_username}:${md5(basic_password)}`;
+    Console.info('Setting password', htpasswd);
+    await fs.outputFile(file, htpasswd);
 
+    // We don't want to store this in the DB
+    delete hook.data.basic_username;
+    delete hook.data.basic_password;
   }
 
   static async createSite(hook) {
     const container = hook.app.service('container');
     const volume = hook.app.service('volume');
+
+    if (hook.data.basic_username || hook.data.basic_password) {
+      await SiteContainer.setPassword(hook);
+    }
 
     let newVolume = await volume.create({});
     newVolume = await volume.get(newVolume.id);
@@ -37,7 +50,7 @@ class SiteContainer {
   static async patchSite(hook) {
     const theSite = await hook.app.service('site').get(hook.id);
     const container = hook.app.service('container');
-    let theContainer = await container.patch(theSite.containerId, {}, {query: hook.params.query});
+    await container.patch(theSite.containerId, {}, {query: hook.params.query});
     return hook;
   }
 
@@ -57,24 +70,24 @@ class SiteContainer {
         if (containerId) {
           try {
             let theContainer = await container.get(containerId);
-            console.log(containerId, hook.result.data);
+            Console.log(containerId, hook.result.data);
             if (theContainer) {
               hook.result.data[i].status = theContainer.data.State.Status;
             } else {
               hook.result.data[i].status = 'not found';
             }
           } catch (e) {
-            console.error("Missing container", e.message)
+            Console.error('Missing container', e.message);
           }
         }
       }
-      console.info(hook.result);
+      Console.info(hook.result);
     }
     return hook;
   }
 
   static async removeSite(hook) {
-    // console.log('Remove site', hook.data, hook.id);
+    // Console.log('Remove site', hook.data, hook.id);
     const theSite = await hook.app.service('site').get(hook.id);
     if(theSite.containerId)
     {
@@ -82,6 +95,15 @@ class SiteContainer {
       await container.remove(theSite.containerId);
     }
     return hook;
+  }
+}
+
+async function checkIfExists(hook) {
+  if (hook.data.subdomain) {
+    const result = await hook.app.service('site').find({query: {subdomain: hook.data.subdomain}});
+    if (result.data.length > 0) {
+      throw new errors.GeneralError(new Error('Subdomain Exists'));
+    }
   }
 }
 

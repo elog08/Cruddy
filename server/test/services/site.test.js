@@ -2,17 +2,16 @@ const assert = require('assert');
 const { expect } = require('chai');
 const app = require('../../src/app');
 const faker = require('faker');
+const Console = console;
 
 describe('site service', () => {
 
   before (async ()=>{
-    await Container.remove(null);
-    await Volume.remove(null);
+    // await Container.remove(null);
+    // await Volume.remove(null);
   });
 
-  const Site = app.service('site'),
-    Container = app.service('container'),
-    Volume = app.service('volume');
+  const Site = app.service('site');
 
   const email = faker.internet.email(),
     userId = faker.random.uuid(),
@@ -23,6 +22,8 @@ describe('site service', () => {
     email,
     title,
     userId,
+    basic_username: 'test123',
+    basic_password: 'test123',
     subdomain
   };
   it('registered the service', () => {
@@ -30,13 +31,14 @@ describe('site service', () => {
   });
 
   it('creates a new site', async () => {
+    Console.info('Creating new site', {siteConfig});
     let newSite = await Site.create(siteConfig);
-    expect(newSite._id).to.be.ok
+    expect(newSite._id).to.be.ok;
   });
 
   it('rejects sites with non-unique IDs', async () => {
     try {
-      let newSite = await Site.create(siteConfig);
+      await Site.create(siteConfig);
     } catch (e) {
       expect(e.message).to.be.ok;
     }

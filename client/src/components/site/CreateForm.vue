@@ -26,7 +26,9 @@ export default ({
       model: {
         title: '',
         subdomain: '',
-        email: ''
+        email: '',
+        username: '',
+        password: '',
       },
       schema: {
         fields: [
@@ -53,6 +55,22 @@ export default ({
             required: true,
             model: 'email',
             placeholder: 'admin@domain.com',
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'Basic Auth Username',
+            required: true,
+            model: 'basic_username',
+            placeholder: 'admin',
+          },
+          {
+            type: 'input',
+            inputType: 'password',
+            label: 'Basic Auth Password',
+            required: true,
+            model: 'basic_password',
+            placeholder: 'password',
           },
           {
             type: 'submit',
