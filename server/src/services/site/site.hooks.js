@@ -1,24 +1,18 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
 const { queryWithCurrentUser, restrictToOwner, associateCurrentUser } = require('feathers-authentication-hooks');
 const errors = require('@feathersjs/errors');
-const fs = require('fs-extra');
 
 // The field that is used on the report model to refer to the User object
 const userBinding = { idField: 'id', as: 'userId' };
 
-const md5 = require('apache-md5');
 const Console = console;
-
-const HTPASSWD_DIR = './htpasswd';
 
 class SiteContainer {
   static async setPassword(hook) {
+    const Htpasswd = hook.app.service('htpasswd');
     const { basic_username = 'admin', basic_password, subdomain } = hook.data;
-    const file = `${HTPASSWD_DIR}/${subdomain}`;
     
-    const htpasswd = `${basic_username}:${md5(basic_password)}`;
-    Console.info('Setting password', htpasswd);
-    await fs.outputFile(file, htpasswd);
+    await Htpasswd.create({id: subdomain, username: basic_username, basic_password: basic_password});
 
     // We don't want to store this in the DB
     delete hook.data.basic_username;
