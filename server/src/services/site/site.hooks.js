@@ -6,19 +6,27 @@ const Console = console;
 // The field that is used on the report model to refer to the User object
 const userBinding = { idField: 'id', as: 'userId' };
 
-async function checkIfExists(hook) {
-  if (hook.data.subdomain) {
-    const result = await hook.app.service('site').find({query: {subdomain: hook.data.subdomain}});
-    if (result.data.length > 0) {
-      throw new errors.GeneralError(new Error('Subdomain Exists'));
-    }
-  }
-}
+const Console = console;
 
 class SiteContainer {
+  static async setPassword(hook) {
+    const Htpasswd = hook.app.service('htpasswd');
+    const { basic_username = 'admin', basic_password, subdomain } = hook.data;
+    
+    await Htpasswd.create({id: subdomain, username: basic_username, basic_password: basic_password});
+
+    // We don't want to store this in the DB
+    delete hook.data.basic_username;
+    delete hook.data.basic_password;
+  }
+
   static async createSite(hook) {
     const container = hook.app.service('container');
     const volume = hook.app.service('volume');
+
+    if (hook.data.basic_username || hook.data.basic_password) {
+      await SiteContainer.setPassword(hook);
+    }
 
     let newVolume = await volume.create({});
     newVolume = await volume.get(newVolume.id);
@@ -82,6 +90,15 @@ class SiteContainer {
       await container.remove(theSite.containerId);
     }
     return hook;
+  }
+}
+
+async function checkIfExists(hook) {
+  if (hook.data.subdomain) {
+    const result = await hook.app.service('site').find({query: {subdomain: hook.data.subdomain}});
+    if (result.data.length > 0) {
+      throw new errors.GeneralError(new Error('Subdomain Exists'));
+    }
   }
 }
 
