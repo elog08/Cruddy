@@ -6,7 +6,6 @@ const Console = console;
 // The field that is used on the report model to refer to the User object
 const userBinding = { idField: 'id', as: 'userId' };
 
-const Console = console;
 
 class SiteContainer {
   static async setPassword(hook) {
