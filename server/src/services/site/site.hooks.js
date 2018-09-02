@@ -19,6 +19,18 @@ class SiteContainer {
     delete hook.data.basic_password;
   }
 
+  // Helper to convert KEY=VAL arrs to objects
+  static arrKeyValToObjj(arr = []) {
+    const obj = {};
+    arr.forEach(keyval => {
+      if (keyval.indexOf('=') > 0) {
+      const [key, val] = keyval.split('=');
+        obj[key] = val;
+      }
+    });
+    return obj;
+  }
+
   static async createSite(hook) {
     const container = hook.app.service('container');
     const volume = hook.app.service('volume');
@@ -30,9 +42,10 @@ class SiteContainer {
     let newVolume = await volume.create({});
     newVolume = await volume.get(newVolume.id);
     let newSite = await container.create({Image: 'elog08/tqfw', env: {
+      ...SiteContainer.arrKeyValToObjj(hook.data.env),
       'VIRTUAL_HOST': hook.data.subdomain,
       'LETSENCRYPT_HOST': hook.data.subdomain,
-      'LETSENCRYPT_EMAIL': hook.data.email
+      'LETSENCRYPT_EMAIL': hook.data.email,
     }, binds: {
       [newVolume.Name]:'/app/api/data'
     }});
