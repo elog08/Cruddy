@@ -23,7 +23,7 @@ export default ({
       createUser: 'create',
     }),
     doRegister() {
-      this.createUser(this.model).then(() => {
+      this.createUser([this.model, {}]).then(() => {
         this.$emit('register_success');
       }, () => {
         this.$emit('register_failure');
