@@ -23,19 +23,19 @@ import ListView from '../components/site/ListView';
 
 export default {
   name: 'Dashboard',
-  components: { 'create-form': CreateForm , 'site-list': ListView },
+  components: { 'create-form': CreateForm, 'site-list': ListView },
   computed: {
     ...mapGetters({ currentReport: 'site/current' }),
   },
   methods: {
     ...mapActions({ update: 'site/update' }),
     ...mapMutations({ setCurrent: 'site/setCurrent' }),
-    showCreateModal () {
-      this.$refs.modalCreate.show()
+    showCreateModal() {
+      this.$refs.modalCreate.show();
     },
-    hideCreateModal () {
-      this.$refs.modalCreate.hide()
-    }
+    hideCreateModal() {
+      this.$refs.modalCreate.hide();
+    },
   },
 };
 </script>

@@ -15,12 +15,12 @@ export default {
     ...mapGetters({ user: 'getCurrentUser' }),
   },
   methods: {
-    ...mapActions({ update: 'users/update'}),
+    ...mapActions({ update: 'users/update' }),
     updateProfile(eventData) {
-        const toUpdate = {...this.user, ...eventData.model };
-        console.info("Update Profile")
-        this.update([this.user.id, toUpdate, {}]).then(console.info, console.error);
-    }
+      const toUpdate = { ...this.user, ...eventData.model };
+      console.info('Update Profile');
+      this.update([this.user.id, toUpdate, {}]).then(console.info, console.error);
+    },
   },
 };
 </script>

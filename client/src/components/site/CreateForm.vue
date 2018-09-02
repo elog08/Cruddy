@@ -50,13 +50,13 @@ export default ({
             placeholder: 'subdomain.domain.com',
           },
           {
-            type: "array",
-            label: "Environmental Variables",
-            model: "env",
+            type: 'array',
+            label: 'Environmental Variables',
+            model: 'env',
             showRemoveButton: true,
-            itemFieldClasses: "form-control",
-            itemContainerClasses: "input-group pb-2",
-            newElementButtonLabelClasses: "btn mt-2",
+            itemFieldClasses: 'form-control',
+            itemContainerClasses: 'input-group pb-2',
+            newElementButtonLabelClasses: 'btn mt-2',
             validator: (value, field, model) => {
               const validPattern = /([^=;]+=[^=;]+(;(?!$)|$))+/;
               const isValid = value.filter(v => !!v).every(v => v && v.match(validPattern));

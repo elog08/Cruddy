@@ -24,36 +24,36 @@ import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'site-list',
-  data () {
+  data() {
     return {
-      fields: [ 'title', 'subdomain', 'status', 'containerId', 'id' ],
-    }
+      fields: ['title', 'subdomain', 'status', 'containerId', 'id'],
+    };
   },
   computed: {
-    ...mapGetters({'items': 'site/list'})
+    ...mapGetters({ items: 'site/list' }),
   },
   mounted() {
-    this.getSites({ query: {} }).then(console.info, console.error)
+    this.getSites({ query: {} }).then(console.info, console.error);
   },
   methods: {
-    doAction({_id}, action) {
+    doAction({ _id }, action) {
       console.info(_id, action);
-      this.patchSite([_id, {}, {query: {action}}]);
+      this.patchSite([_id, {}, { query: { action } }]);
     },
     ...mapActions({ getSites: 'site/find', deleteSite: 'site/remove', patchSite: 'site/patch' }),
-      doDelete({_id}) {
-        this.$dialog
-          .confirm('Please confirm to continue')
-          .then((dialog) => {
-              this.deleteSite(_id);
-          })
-          .catch(function() {
-        console.log('Clicked on cancel');
-      });
+    doDelete({ _id }) {
+      this.$dialog
+        .confirm('Please confirm to continue')
+        .then((dialog) => {
+          this.deleteSite(_id);
+        })
+        .catch(() => {
+          console.log('Clicked on cancel');
+        });
     },
     doEdit(item) {
-      this.$emit('edit', {item});
-    }
+      this.$emit('edit', { item });
+    },
   },
 };
 </script>

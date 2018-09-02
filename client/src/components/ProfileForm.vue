@@ -14,7 +14,7 @@ export default ({
   name: 'profile-form',
   props: {
     user: {
-        type: Object,
+      type: Object,
     },
   },
   methods: {
@@ -26,7 +26,7 @@ export default ({
   data() {
     return {
       model: {
-        name: this.user.name
+        name: this.user.name,
       },
       schema: {
         legend: 'User Info',
@@ -35,7 +35,7 @@ export default ({
             type: 'input',
             inputType: 'text',
             label: 'Name',
-            model: "name",
+            model: 'name',
             required: true,
             placeholder: 'Full Name',
           },

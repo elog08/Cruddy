@@ -35,26 +35,26 @@ import ListView from '../components/reports/ListView';
 
 export default {
   name: 'Profile',
-  components: { 'create-form': CreateForm , 'edit-form': EditForm , 'report-list': ListView },
+  components: { 'create-form': CreateForm, 'edit-form': EditForm, 'report-list': ListView },
   computed: {
     ...mapGetters({ currentReport: 'report/current' }),
   },
   methods: {
-    ...mapActions({ update: 'report/update'}),
-    ...mapMutations({setCurrent: 'report/setCurrent'}),
-    showCreateModal () {
-      this.$refs.modalCreate.show()
+    ...mapActions({ update: 'report/update' }),
+    ...mapMutations({ setCurrent: 'report/setCurrent' }),
+    showCreateModal() {
+      this.$refs.modalCreate.show();
     },
-    showEditModal ({item}) {
+    showEditModal({ item }) {
       this.setCurrent(item._id);
       this.$refs.modalEdit.show();
     },
-    hideCreateModal () {
-      this.$refs.modalCreate.hide()
+    hideCreateModal() {
+      this.$refs.modalCreate.hide();
     },
-    hideEditModal () {
-      this.$refs.modalEdit.hide()
-    }
+    hideEditModal() {
+      this.$refs.modalEdit.hide();
+    },
   },
 };
 </script>

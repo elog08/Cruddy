@@ -13,9 +13,9 @@ export default ({
   name: 'edit-form',
   props: {
     item: {
-        _id: "",
-        title: "",
-        description: ""
+      _id: '',
+      title: '',
+      description: '',
     },
   },
   mounted() {
@@ -24,8 +24,8 @@ export default ({
   methods: {
     ...mapActions({ update: 'report/update' }),
     doUpdate() {
-      console.dir(this.model)
-      this.update([this.model._id, {...this.item, ...this.model}, {}]).then((result) => {
+      console.dir(this.model);
+      this.update([this.model._id, { ...this.item, ...this.model }, {}]).then((result) => {
         this.$emit('success');
       }, () => {
         this.$emit('failure');
@@ -34,15 +34,15 @@ export default ({
   },
 
   watch: {
-    item: function(item) {
-      console.info("New item")
+    item(item) {
+      console.info('New item');
       this.model = { _id: item._id, title: item.title, description: item.description };
-    }
+    },
   },
 
   data() {
     return {
-      model: { title: "", description: "", _id: "" },
+      model: { title: '', description: '', _id: '' },
       schema: {
         fields: [
           {

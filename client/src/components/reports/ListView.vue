@@ -13,32 +13,32 @@ import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'report-list',
-  data () {
+  data() {
     return {
-      fields: [ 'title', 'description', 'id' ],
-    }
+      fields: ['title', 'description', 'id'],
+    };
   },
   computed: {
-    ...mapGetters({'items': 'report/list'})
+    ...mapGetters({ items: 'report/list' }),
   },
   mounted() {
-    this.getReports({ query: {} }).then(console.info, console.error)
+    this.getReports({ query: {} }).then(console.info, console.error);
   },
   methods: {
     ...mapActions({ getReports: 'report/find', deleteReport: 'report/remove' }),
-      doDelete({_id}) {
-        this.$dialog
-      .confirm('Please confirm to continue')
-      .then((dialog) => {
+    doDelete({ _id }) {
+      this.$dialog
+        .confirm('Please confirm to continue')
+        .then((dialog) => {
           this.deleteReport(_id);
-      })
-      .catch(function() {
-    console.log('Clicked on cancel');
-  });
+        })
+        .catch(() => {
+          console.log('Clicked on cancel');
+        });
     },
     doEdit(item) {
-      this.$emit('edit', {item});
-    }
+      this.$emit('edit', { item });
+    },
   },
 };
 </script>

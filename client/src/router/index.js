@@ -7,6 +7,7 @@ import Login from '@/views/Login';
 import Register from '@/views/Register';
 import Reports from '@/views/Reports';
 import Profile from '@/views/Profile';
+import Stats from '@/views/Stats';
 
 Vue.use(Router);
 
@@ -70,6 +71,15 @@ const router = new Router({
       meta: {
         breadcrumb: 'Reports',
         auth: true,
+      },
+    }, {
+      path: '/stats',
+      name: 'Stats',
+      title: 'Stats',
+      component: Stats,
+      meta: {
+        breadcrumb: 'Stats',
+        auth: false,
       },
     },
   ],

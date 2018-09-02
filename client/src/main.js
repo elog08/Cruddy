@@ -6,6 +6,7 @@ import './plugins/bootstrap';
 import './plugins/formgenerator';
 import './plugins/breadcrumbs';
 import './plugins/dialog';
+import './plugins/filters';
 
 import store from './store';
 
