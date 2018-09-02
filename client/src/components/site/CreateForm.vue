@@ -27,6 +27,7 @@ export default ({
         title: '',
         subdomain: '',
         email: '',
+        env: ['ADMIN_EMAIL=user@domain.com'],
         username: '',
         password: '',
       },
@@ -49,6 +50,20 @@ export default ({
             placeholder: 'subdomain.domain.com',
           },
           {
+            type: "array",
+            label: "Environmental Variables",
+            model: "env",
+            showRemoveButton: true,
+            itemFieldClasses: "form-control",
+            itemContainerClasses: "input-group pb-2",
+            newElementButtonLabelClasses: "btn mt-2",
+            validator: (value, field, model) => {
+              const validPattern = /([^=;]+=[^=;]+(;(?!$)|$))+/;
+              const isValid = value.filter(v => !!v).every(v => v && v.match(validPattern));
+              return isValid ? [] : ['Environment var pattern invalid, use KEY=VAL pairs'];
+            },
+          },
+          {
             type: 'input',
             inputType: 'text',
             label: 'Email',
@@ -60,7 +75,7 @@ export default ({
             type: 'input',
             inputType: 'text',
             label: 'Basic Auth Username',
-            required: true,
+            required: false,
             model: 'basic_username',
             placeholder: 'admin',
           },
@@ -68,7 +83,7 @@ export default ({
             type: 'input',
             inputType: 'password',
             label: 'Basic Auth Password',
-            required: true,
+            required: false,
             model: 'basic_password',
             placeholder: 'password',
           },
