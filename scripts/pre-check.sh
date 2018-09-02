@@ -18,4 +18,7 @@ which feathers && echo "Feathers Installed"  || npm install -g @feathersjs/cli
 # Install Vue CLI
 which vue && echo "Vue Installed"  || npm install -g @vue/cli
 
+# Check Docker Image
+which docker && docker pull yobasystems/alpine-grav
+
 echo "Environment pre-check...done"

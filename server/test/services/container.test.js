@@ -14,14 +14,18 @@ describe('\'container\' service', function () {
   });
 
   it('starts a container', async () => {
-    container = await service.create({image: 'yobasystems/alpine-grav'});
+    try {
+    container = await service.create({Image: 'yobasystems/alpine-grav'});
     expect(container.id).to.be.ok;
     containerId = container.id;
     await service.remove(container.id);
+  } catch (e) {
+    console.error(e);
+  }
   });
 
   it('passes environment a container', async () => {
-    container = await service.create({image: 'yobasystems/alpine-grav', env: {
+    container = await service.create({Image: 'yobasystems/alpine-grav', env: {
       'VIRTUAL_HOST': 'sub.domain.com',
       'LETSENCRYPT_HOST': 'sub.domain.com',
       'LETSENCRYPT_EMAIL': 'email@sub.domain.com'

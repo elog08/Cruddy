@@ -17,7 +17,7 @@ class Service {
     try {
       const images = await this.docker.image.list();
       let data = await Promise.all(images.map(c => this.get(c.id)));
-      data = data.filter(img => !!img.name)
+      data = data.filter(img => !!img.name);
       return {
         total: data.length,
         data
