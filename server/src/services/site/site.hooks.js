@@ -24,7 +24,7 @@ class SiteContainer {
     const obj = {};
     arr.forEach(keyval => {
       if (keyval.indexOf('=') > 0) {
-      const [key, val] = keyval.split('=');
+        const [key, val] = keyval.split('=');
         obj[key] = val;
       }
     });

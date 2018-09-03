@@ -1,7 +1,7 @@
 const assert = require('assert');
 const { expect } = require('chai');
 const app = require('../../src/app');
-// const Console = console;
+const Console = console;
 
 describe('\'container\' service', function () {
   this.timeout(60000);
@@ -15,13 +15,13 @@ describe('\'container\' service', function () {
 
   it('starts a container', async () => {
     try {
-    container = await service.create({Image: 'yobasystems/alpine-grav'});
-    expect(container.id).to.be.ok;
-    containerId = container.id;
-    await service.remove(container.id);
-  } catch (e) {
-    console.error(e);
-  }
+      container = await service.create({Image: 'yobasystems/alpine-grav'});
+      expect(container.id).to.be.ok;
+      containerId = container.id;
+      await service.remove(container.id);
+    } catch (e) {
+      Console.error(e);
+    }
   });
 
   it('passes environment a container', async () => {
