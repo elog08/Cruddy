@@ -7,6 +7,7 @@ COPY ecosystem.config.js .
 
 # Install app dependencies
 ENV NPM_CONFIG_LOGLEVEL warn
+RUN npm cache verify
 RUN cd client && npm install
 RUN cd server && npm install
 
