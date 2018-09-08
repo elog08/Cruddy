@@ -7,97 +7,130 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { mapActions } from "vuex";
 
-export default ({
-  name: 'create-form',
+export default {
+  name: "create-form",
+  props: ["images"],
   methods: {
-    ...mapActions({ create: 'site/create' }),
+    ...mapActions({ create: "site/create" }),
     doCreate() {
-      this.create([this.model, {}]).then((result) => {
-        this.$emit('success');
-      }, () => {
-        this.$emit('failure');
-      });
-    },
+      this.create([this.model, {}]).then(
+        result => {
+          this.$emit("success");
+        },
+        () => {
+          this.$emit("failure");
+        }
+      );
+    }
   },
   data() {
     return {
       model: {
-        title: '',
-        subdomain: '',
-        email: '',
-        env: ['ADMIN_EMAIL=user@domain.com'],
-        username: '',
-        password: '',
+        title: "",
+        subdomain: "",
+        email: "",
+        env: ["ADMIN_EMAIL=user@domain.com"],
+        username: "",
+        image: "",
+        password: ""
       },
       schema: {
-        fields: [
+        groups: [
           {
-            type: 'input',
-            inputType: 'text',
-            label: 'Title',
-            required: true,
-            model: 'title',
-            placeholder: 'Some Title',
+            legend: "Site Details",
+            fields: [
+              {
+                type: "input",
+                inputType: "text",
+                label: "Title",
+                required: true,
+                model: "title",
+                placeholder: "Some Title"
+              },
+              {
+                type: "input",
+                inputType: "text",
+                label: "Sub-domain",
+                required: true,
+                model: "subdomain",
+                placeholder: "subdomain.domain.com"
+              }
+            ]
           },
           {
-            type: 'input',
-            inputType: 'text',
-            label: 'Sub-domain',
-            required: true,
-            model: 'subdomain',
-            placeholder: 'subdomain.domain.com',
+            legend: "Image Details",
+            fields: [
+              {
+                type: "select",
+                label: "Image",
+                model: "image",
+                values: [...this.images.map(image => image.name)]
+              },
+              {
+                type: "array",
+                label: "Environmental Variables",
+                model: "env",
+                showRemoveButton: true,
+                itemFieldClasses: "form-control",
+                itemContainerClasses: "input-group pb-2",
+                newElementButtonLabelClasses: "btn mt-2",
+                validator: (value, field, model) => {
+                  const validPattern = /([^=;]+=[^=;]+(;(?!$)|$))+/;
+                  const isValid = value
+                    .filter(v => !!v)
+                    .every(v => v && v.match(validPattern));
+                  return isValid
+                    ? []
+                    : ["Environment var pattern invalid, use KEY=VAL pairs"];
+                }
+              },
+              {
+                type: "input",
+                inputType: "text",
+                label: "Email",
+                required: true,
+                model: "email",
+                placeholder: "admin@domain.com"
+              },
+              
+            ]
           },
           {
-            type: 'array',
-            label: 'Environmental Variables',
-            model: 'env',
-            showRemoveButton: true,
-            itemFieldClasses: 'form-control',
-            itemContainerClasses: 'input-group pb-2',
-            newElementButtonLabelClasses: 'btn mt-2',
-            validator: (value, field, model) => {
-              const validPattern = /([^=;]+=[^=;]+(;(?!$)|$))+/;
-              const isValid = value.filter(v => !!v).every(v => v && v.match(validPattern));
-              return isValid ? [] : ['Environment var pattern invalid, use KEY=VAL pairs'];
-            },
+            legend: "Security",
+            fields: [
+              {
+                type: "input",
+                inputType: "text",
+                label: "Basic Auth Username",
+                required: false,
+                model: "basic_username",
+                placeholder: "admin"
+              },
+              {
+                type: "input",
+                inputType: "password",
+                label: "Basic Auth Password",
+                required: false,
+                model: "basic_password",
+                placeholder: "password"
+              },
+            ]
           },
           {
-            type: 'input',
-            inputType: 'text',
-            label: 'Email',
-            required: true,
-            model: 'email',
-            placeholder: 'admin@domain.com',
-          },
-          {
-            type: 'input',
-            inputType: 'text',
-            label: 'Basic Auth Username',
-            required: false,
-            model: 'basic_username',
-            placeholder: 'admin',
-          },
-          {
-            type: 'input',
-            inputType: 'password',
-            label: 'Basic Auth Password',
-            required: false,
-            model: 'basic_password',
-            placeholder: 'password',
-          },
-          {
-            type: 'submit',
-            buttonText: 'Create',
-          },
-        ],
+            fields: [{
+                type: "submit",
+                buttonText: "Create"
+            }]
+          }
+        ]
       },
       formOptions: {
         validateAfterLoad: true,
-        validateAfterChanged: true,
-      },
+        validateAfterChanged: true
+      }
     };
-  },
-});
+  }
+};
 </script>

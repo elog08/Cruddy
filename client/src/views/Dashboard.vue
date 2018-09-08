@@ -11,7 +11,7 @@
            Close
          </b-btn>
     </div>
-    <create-form v-on:success="hideCreateModal"/>
+    <create-form v-bind:images="images" v-on:success="hideCreateModal"/>
   </b-modal>
   </div>
 </template>
@@ -26,9 +26,10 @@ export default {
   components: { 'create-form': CreateForm, 'site-list': ListView },
   computed: {
     ...mapGetters({ currentReport: 'site/current' }),
+    ...mapGetters({ images: 'image/list' })
   },
   methods: {
-    ...mapActions({ update: 'site/update' }),
+    ...mapActions({ update: 'site/update', getListImages: 'image/find' }),
     ...mapMutations({ setCurrent: 'site/setCurrent' }),
     showCreateModal() {
       this.$refs.modalCreate.show();
@@ -36,6 +37,9 @@ export default {
     hideCreateModal() {
       this.$refs.modalCreate.hide();
     },
+  },
+  mounted() {
+    this.getListImages({query: {}}).then(console.info).catch(console.error);
   },
 };
 </script>
