@@ -32,7 +32,7 @@ class Service {
     try {
       const image = await this.docker.image.get(id);
       const { data: { RepoTags: [name]} } = await image.status();
-      return {id, name};
+      return {_id: id,  name};
     }
     catch (e) {
       if (e.statusCode && e.statusCode === 404)

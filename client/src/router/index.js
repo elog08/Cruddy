@@ -8,6 +8,7 @@ import Register from '@/views/Register';
 import Reports from '@/views/Reports';
 import Profile from '@/views/Profile';
 import Stats from '@/views/Stats';
+import Images from '@/views/Images';
 
 Vue.use(Router);
 
@@ -79,6 +80,15 @@ const router = new Router({
       component: Stats,
       meta: {
         breadcrumb: 'Stats',
+        auth: false,
+      },
+    }, {
+      path: '/images',
+      name: 'Images',
+      title: 'Images',
+      component: Images,
+      meta: {
+        breadcrumb: 'Images',
         auth: false,
       },
     },

@@ -2,11 +2,7 @@ const { Forbidden } = require('@feathersjs/errors');
 
 module.exports = {
   before: {
-    all: [ context => {
-      if(context.params.provider) {
-        throw new Forbidden('You are not allowed to access this');
-      }
-    } ],
+    all: [],
     find: [],
     get: [],
     create: [],

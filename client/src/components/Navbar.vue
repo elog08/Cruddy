@@ -9,6 +9,7 @@
 
     <b-navbar-nav>
       <b-nav-item to="/stats">Stats</b-nav-item>
+      <b-nav-item to="/images">Images</b-nav-item>
     </b-navbar-nav>
     <b-navbar-nav v-if="isLoggedIn">
       <b-nav-item to="/dashboard">Dashboard</b-nav-item>
