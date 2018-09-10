@@ -53,15 +53,5 @@ app.hooks(appHooks);
 
 const authManagement = app.service('authManagement');
 
-authManagement.create({ action: 'checkUnique',
-  value: {email: "kpsychwave@gmail.com"}, // e.g. {email, username}. Props with null or undefined are ignored.
-  ownId, // excludes your current user from the search
-  meta: { noErrMsg }, // if return an error.message if not unique
-})
-
-authManagement.create({ action: 'sendResetPwd',
-  value: {email: "kpsychwave@gmail.com"}, // {email}, {token: verifyToken}
-  notifierOptions: {}, // options passed to options.notifier, e.g. {preferredComm: 'email'}
-})
 
 module.exports = app;
