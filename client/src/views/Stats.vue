@@ -10,7 +10,7 @@
             <h2>Average: {{sysinfo.load.avgload}}</h2>
             <h2>Current: {{sysinfo.load.currentload}}</h2>
         </b-card>
-        <b-card 
+        <b-card
                 header="Memory Usage"
                 class="text-center">
             <h2>{{memPerc}}</h2>
@@ -22,15 +22,15 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import UsageChart from '../components/UsageChart.js'
+import UsageChart from '../components/UsageChart.js';
 
 export default {
   name: 'Status',
-  components: {UsageChart},
+  components: { UsageChart },
   computed: {
     ...mapGetters({ sysinfo: 'sysinfo/current' }),
     memPerc() {
-      return `${Math.floor(100 * (this.sysinfo.mem.used / this.sysinfo.mem.total))}%`
+      return `${Math.floor(100 * (this.sysinfo.mem.used / this.sysinfo.mem.total))}%`;
     },
     memChart() {
       return {
@@ -39,10 +39,10 @@ export default {
           {
             label: 'Used',
             backgroundColor: ['green', 'grey'],
-            data: [this.sysinfo.mem.free, this.sysinfo.mem.used]
-          }
-        ]
-      }
+            data: [this.sysinfo.mem.free, this.sysinfo.mem.used],
+          },
+        ],
+      };
     },
   },
   methods: {

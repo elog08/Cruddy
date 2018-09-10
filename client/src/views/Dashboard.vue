@@ -26,7 +26,7 @@ export default {
   components: { 'create-form': CreateForm, 'site-list': ListView },
   computed: {
     ...mapGetters({ currentReport: 'site/current' }),
-    ...mapGetters({ images: 'image/list' })
+    ...mapGetters({ images: 'image/list' }),
   },
   methods: {
     ...mapActions({ update: 'site/update', getListImages: 'image/find' }),
@@ -39,7 +39,7 @@ export default {
     },
   },
   mounted() {
-    this.getListImages({query: {}}).then(console.info).catch(console.error);
+    this.getListImages({ query: {} }).then(console.info).catch(console.error);
   },
 };
 </script>

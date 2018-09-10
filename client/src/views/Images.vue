@@ -9,7 +9,6 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import UsageChart from '../components/UsageChart.js'
 
 export default {
   name: 'Images',
@@ -20,7 +19,7 @@ export default {
     ...mapActions({ getListImages: 'image/find' }),
   },
   mounted() {
-    this.getListImages({query: {}}).then(console.info).catch(console.error);
+    this.getListImages({ query: {} }).then(console.info).catch(console.error);
   },
 };
 
