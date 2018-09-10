@@ -1,13 +1,24 @@
 const authentication = require('@feathersjs/authentication');
 const jwt = require('@feathersjs/authentication-jwt');
 const local = require('@feathersjs/authentication-local');
-
+const authManagement = require('feathers-authentication-management');
+const hooks = require('feathers-hooks-common');
 
 module.exports = function (app) {
   const config = app.get('authentication');
 
   // Set up authentication with the secret
   app.configure(authentication(config));
+
+  const notifier = function(type, user, notifierOptions) {
+    console.info({type, user, notifierOptions});
+    return Promise.resolve();
+  }
+
+  const options = {
+    notifier
+  };
+  app.configure(authManagement({ options }))
   app.configure(jwt());
   app.configure(local());
 
@@ -24,4 +35,12 @@ module.exports = function (app) {
       ]
     }
   });
+
+  app.service('authManagement').notifier = notifier;
+  // const isAction = (...args) => hook => args.includes(hook.data.action);
+  //   app.service('authManagement').before({
+  //     create: [
+  //       hooks.iff(isAction('passwordChange', 'identityChange'), authentication.hooks.authenticate('jwt')),
+  //     ],
+  //   });
 };
