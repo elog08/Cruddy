@@ -55,6 +55,7 @@ const rootStore = new Vuex.Store({
     service('site'),
     service('image'),
     service('sysinfo'),
+    service('authManagement'),
     auth({ userService: 'users' }),
   ],
 });
