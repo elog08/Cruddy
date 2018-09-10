@@ -8,6 +8,7 @@ const volume = require('./volume/volume.service.js');
 const htpasswd = require('./htpasswd/htpasswd.service.js');
 const image = require('./image/image.service.js');
 const sysinfo = require('./sysinfo/sysinfo.service.js');
+const email = require('./email/email.service.js');
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(users);
@@ -20,4 +21,5 @@ module.exports = function (app) {
   app.configure(htpasswd);
   app.configure(image);
   app.configure(sysinfo);
+  app.configure(email);
 };
