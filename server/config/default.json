@@ -6,6 +6,8 @@
     "default": 10,
     "max": 50
   },
+  "MAILGUN_API_KEY": "MAILGUN_API_KEY",
+  "MAILGUN_DOMAIN": "MAILGUN_DOMAIN",
   "application": {
     "invite_codes": ["Cruddy123!", "code"]
   },
@@ -21,7 +23,7 @@
       "header": {
         "typ": "access"
       },
-      "audience": "https://yourdomain.com",
+      "audience": "https://www.cruddy.xyz",
       "subject": "anonymous",
       "issuer": "feathers",
       "algorithm": "HS256",
