@@ -8,8 +8,12 @@
   },
   "MAILGUN_API_KEY": "MAILGUN_API_KEY",
   "MAILGUN_DOMAIN": "MAILGUN_DOMAIN",
+  "FROM_EMAIL": "contact@cruddy.xyz",
   "application": {
     "invite_codes": ["Cruddy123!", "code"]
+  },
+  "urls": {
+    "publicURL": ""
   },
   "authentication": {
     "secret": "dfcadb6a1313827a347ac7a9127063a726c9359f1ee2ebe76575f4972adbb09960f5b696ad29e51a3f9c15d9f0bcb07813e8468eecbcaab877d05d210973ea0a7d5f6392c0607c64dea51c517d6e61437f92e858b541e4136e05659cab3dbb0bd1404dcdb1f420122b6ec7f66402b3969c9bf0241ede3de4e88ace4d204305b479babcd93b19432b67a3760960e13bfe55feb1146fefff1e635c0479a063643f295e2f80e8991e74bec3820ca4313c5c111c832b7184e4d1c47265b4645fd1478529d75ede1e22770b93a260419b09532cdc8b4bdef699449491cb62cd51af056c0b10d3f488515ee860a7b17fea04e1d947de4dd37574d75c21fb6d18c7aad1",
