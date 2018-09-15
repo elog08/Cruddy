@@ -9,10 +9,6 @@ import { initialAuthenticate } from '../utils/auth';
 
 const socket = io('/', { path: '/api/socket.io' });
 
-// const vuexLocal = new VuexPersistence({
-//   storage: window.localStorage,
-// });
-
 const feathersClient = initFeathers({ socket });
 const { service, auth, FeathersVuex } = feathersVuex(feathersClient, { idField: '_id' });
 
@@ -25,6 +21,9 @@ const rootStore = new Vuex.Store({
     isLoggedIn: false,
     connection: {
       status: false,
+    },
+    globalAlert: {
+      messages: []
     },
   },
   getters: {
@@ -45,6 +44,17 @@ const rootStore = new Vuex.Store({
     UNSET_LOGIN: (state) => {
       state.isLoggedIn = false;
     },
+    ADD_GLOBAL_MESSAGE: (state, message) => {
+      const id = Date.now();
+      state.globalAlert.messages.unshift({id, ...message});
+    },
+    REMOVE_GLOBAL_MESSAGE: (state, id) => {
+      const idx = state.globalAlert.messages.findIndex((message) => message.id === id);
+      state.globalAlert.messages.splice(idx, 1);
+    },
+    CLEAR_GLOBAL_MESSAGES: (state, message) => {
+      state.globalAlert.messages = [];
+    }
   },
   plugins: [
     // vuexLocal.plugin,
