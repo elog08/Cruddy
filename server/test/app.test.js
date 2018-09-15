@@ -38,14 +38,16 @@ const fakeReport = () => ({
 const { invite_codes } = app.settings.application;
 
 describe('Feathers application tests', function() {
-  this.timeout(5000);
+  this.timeout(10000);
   before(function(done) {
     this.server = app.listen(port);
     this.server.once('listening', () => done());
   });
 
   after(function(done) {
-    this.server.close(done);
+    console.info('Tests done... after hook')
+    this.server.close();
+    done();
   });
 
   it('starts and shows the index page', () => {
@@ -100,6 +102,79 @@ describe('Feathers application tests', function() {
           assert.equal(res.status, 201);
         });
     });
+
+    describe('changes the password', () => {
+      it ('complains with an invalid old password', () => {
+        const oldPassword = newUser.password + '123';
+        const password = newUser.password + '123';
+
+        const payload = {
+          "action": "passwordChange",
+          "value": {
+           oldPassword,
+           password,
+           "user": {
+            "email": newUser.email
+           }
+          }
+         };
+
+        return client.post('/authManagement', payload)
+          .catch(({response}) => {
+            assert.equal(response.status, 400);
+          });
+      });
+
+      it ('updates with an valid old password', () => {
+        const oldPassword = newUser.password;
+        const password = newUser.password + '123';
+
+        const payload = {
+          "action": "passwordChange",
+          "value": {
+           oldPassword,
+           password,
+           "user": {
+            "email": newUser.email
+           }
+          }
+         };
+
+        return client.post('/authManagement', payload)
+          .then(res => {
+            assert.equal(res.status, 201);
+          });
+      });
+
+      it('does not authenticate with the old password', () => {
+        const payload = {
+          'strategy': 'local',
+          'email': newUser.email,
+          'password': newUser.password
+        };
+        
+        return client.post('/authentication', payload)
+          .catch(({response}) => {
+            assert.equal(response.status, 401);
+          });
+      });
+
+      it('authenticates the user with the new password', () => {
+        const payload = {
+          'strategy': 'local',
+          'email': newUser.email,
+          'password': newUser.password + '123'
+        };
+        
+        return client.post('/authentication', payload)
+          .then(res => {
+            accessToken = res.data.accessToken;
+            lastUserId = (jwtDecode(accessToken)).userId;
+            assert.equal(res.status, 201);
+          });
+      });
+  
+    })
     
     it('gets the user profile', () => {
       return client.get(`/users/${lastUserId}`, {headers: {'Authorization': 'bearer ' + accessToken} })

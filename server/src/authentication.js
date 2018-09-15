@@ -6,13 +6,35 @@ const hooks = require('feathers-hooks-common');
 
 module.exports = function (app) {
   const config = app.get('authentication');
-
+  const from = app.get('FROM_EMAIL');
   // Set up authentication with the secret
   app.configure(authentication(config));
 
+  const { publicURL } = app.get('urls');
+  const hashLink = token => `<a href="${publicURL}/${token}">click here></a>`;
+
   const notifier = function(type, user, notifierOptions) {
+    let subject, html;
+
     console.info({type, user, notifierOptions});
-    return Promise.resolve();
+    
+
+    switch (type) {
+      case 'resendVerifySignup':
+        subject = 'Email verification';
+        html = 'Verify your email: '+hashLink(user.verifyToken);
+    }
+
+    const message = {
+      from,
+      to: user.email,
+      subject,
+      html
+    };
+
+    console.info('Emailing', {message});
+
+    return app.service('emails').create(message);
   }
 
   const options = {

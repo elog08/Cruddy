@@ -5,6 +5,13 @@ const errors = require('@feathersjs/errors');
 const verifyHooks = require('feathers-authentication-management').hooks;
 const { iff, isProvider, discard } = commonHooks;
 
+const handleDuplicateUserError = hook => {
+  if (hook.error && hook.error.errorType === 'uniqueViolated')
+    {
+      throw new errors.GeneralError(new Error('Email exists'));
+    }
+};
+
 const validateInviteCodes = hook => {
   const { invite_codes } = hook.app.settings.application;
   if (invite_codes && invite_codes.length > 0) {
@@ -35,7 +42,21 @@ module.exports = {
     get: [ authenticate('jwt') ],
     create: [ iff(isProvider('external'), discard('confirm')), verifyHooks.addVerification(), validateInviteCodes, hashPassword() ],
     update: [ authenticate('jwt') ],
-    patch: [ hashPassword(), authenticate('jwt') ],
+    patch: [ iff(isProvider('external'), hashPassword()), authenticate('jwt'),
+      commonHooks.iff(
+        commonHooks.isProvider('external'),    
+        commonHooks.preventChanges(
+          'email',
+          'isVerified',
+          'verifyToken',
+          'verifyShortToken',
+          'verifyExpires',
+          'verifyChanges',
+          'resetToken',
+          'resetShortToken',
+          'resetExpires'
+        ))
+    ],
     remove: [ authenticate('jwt') ]
   },
 
@@ -48,7 +69,7 @@ module.exports = {
     ],
     find: [],
     get: [],
-    create: [ sendVerificationEmail() ],
+    create: [ sendVerificationEmail(), verifyHooks.removeVerification() ],
     update: [],
     patch: [],
     remove: []
@@ -58,7 +79,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [handleDuplicateUserError],
     update: [],
     patch: [],
     remove: []

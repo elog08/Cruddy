@@ -8,5 +8,9 @@ module.exports = function (app) {
     autoload: true
   });
 
+  // Using a unique constraint with the index
+  Model.ensureIndex({ fieldName: 'username', unique: true },  err => err && app.error('Model initialization', err));
+  Model.ensureIndex({ fieldName: 'email', unique: true },  err => err && app.error('Model initialization', err));
+
   return Model;
 };

@@ -3,6 +3,7 @@ const favicon = require('serve-favicon');
 const compress = require('compression');
 const helmet = require('helmet');
 const cors = require('cors');
+const feathersLogger = require('feathers-logger');
 const logger = require('./logger');
 
 const feathers = require('@feathersjs/feathers');
@@ -44,6 +45,8 @@ app.configure(authentication);
 app.configure(services);
 // Set up event channels (see channels.js)
 app.configure(channels);
+
+app.configure(feathersLogger());
 
 // Configure a middleware for 404s and the error handler
 app.use(express.notFound());

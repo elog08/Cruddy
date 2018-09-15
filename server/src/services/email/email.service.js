@@ -22,19 +22,5 @@ module.exports = function () {
   // Get our initialized service so that we can register hooks and filters
   const service = app.service('emails');
 
-    // Use the service
-  const email = {
-    from: 'test@cruddy.xyz',
-    to: 'test@cruddy.xyz',
-    subject: 'Sendgrid test',
-    html: 'This is the email body'
-  };
-
-  app.service('emails').create(email).then(function (result) {
-    console.log('Sent email', result);
-  }).catch(err => {
-    console.log(err);
-  });
-
   service.hooks(hooks);
 };

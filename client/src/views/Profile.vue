@@ -25,12 +25,16 @@ export default {
   },
   methods: {
     ...mapActions({ update: 'users/update', authManagement: 'authManagement/create' }),
-    updatePassword({oldPassword, password}){
-      this.authManagement({
+    updatePassword({model: {oldPassword, password}}){
+      const payload = {
         action: 'passwordChange',
+        value: {
         oldPassword,
-        password
-      })
+        password,
+        user: {email : this.user.email }
+        }
+      };
+      this.$store.dispatch('authManagement/create', payload).then(console.log, console.error);
     },
     updateProfile(eventData) {
       const toUpdate = { ...this.user, ...eventData.model };
