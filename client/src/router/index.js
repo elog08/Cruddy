@@ -9,6 +9,7 @@ import Reports from '@/views/Reports';
 import Profile from '@/views/Profile';
 import Stats from '@/views/Stats';
 import Images from '@/views/Images';
+import ForgotPass from '@/views/ForgotPass';
 
 Vue.use(Router);
 
@@ -43,6 +44,15 @@ const router = new Router({
       component: Login,
       meta: {
         breadcrumb: 'Login',
+      },
+    },
+    {
+      path: '/forgotpass',
+      name: 'ForgotPass',
+      title: 'Forgot Password',
+      component: ForgotPass,
+      meta: {
+        breadcrumb: 'Forgot Password',
       },
     },
     {
