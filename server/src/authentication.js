@@ -16,13 +16,31 @@ module.exports = function (app) {
   const notifier = function(type, user, notifierOptions) {
     let subject, html;
 
-    console.info({type, user, notifierOptions});
+    console.info('Notify',{type, user, notifierOptions});
     
 
     switch (type) {
       case 'resendVerifySignup':
+      case 'verifySignup':
         subject = 'Email verification';
         html = 'Verify your email: '+hashLink(user.verifyToken);
+        break;
+      case 'sendResetPwd':
+        subject = 'Password reset email';
+        html = 'Reset your password: '+hashLink(user.resetShortToken);
+        break;
+      case 'resetPwd':
+        subject = 'Password reset';
+        html = 'Reset your password: '+hashLink(user.verifyToken);
+        break;
+      case 'passwordChange':
+        subject = 'Password changed';
+        html = 'Your password was successfully changed.';
+        break;
+      case 'identityChange':
+        subject = 'Your identity was changed';
+        html = 'Verify changes:'+hashLink(user.verifyToken);
+        break;
     }
 
     const message = {
