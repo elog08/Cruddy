@@ -76,12 +76,13 @@ class Service {
       const HostPort = port + '';
       const { Image = 'hello-world', env = {}, binds = {} } = data;
       const Env = Object.keys(env).map(k => `${k}=${(env[k])}`);
-      const Binds= Object.keys(env).map(k => `${k}:${(binds[k])}`);
+      const Binds= Object.keys(binds).map(k => `${k}:${(binds[k])}`);
 
       const config = {
         Image,
         name: 'test_' + Date.now(),
-        Env
+        Env,
+        Binds
       };
       const container = await this.docker.container.create(config);
       const result = await container.start();
