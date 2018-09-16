@@ -3,7 +3,7 @@
   <b-button @click.stop="getSites">Refresh</b-button>
   <b-table striped hover :per-page=10 :fields="fields" :items="items">
     <template slot="subdomain" slot-scope="row">
-      <a :href="row.item.subdomain">{{row.item.subdomain}}</a>
+      <a :href="'https://' + row.item.subdomain">{{row.item.subdomain}}</a>
     </template>
     <template slot="status" slot-scope="row">
       <span>{{row.item.status}}</span>

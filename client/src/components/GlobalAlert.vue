@@ -21,7 +21,7 @@ export default ({
     },
     messages() {
       return this.globalAlert.messages;
-    }
+    },
   },
 });
 </script>

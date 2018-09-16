@@ -7,7 +7,7 @@
       <h3>New Site</h3>
     </div>
     <div slot="modal-footer" class="w-100">
-      <b-btn size="sm" class="float-right" variant="primary" @click="show=false">
+      <b-btn size="sm" class="float-right" variant="primary" @click="hideCreateModal">
            Close
          </b-btn>
     </div>

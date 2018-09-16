@@ -1,7 +1,8 @@
 const hooks = require('feathers-hooks-common');
+const Console = console;
+
 const info = msg => hook => {
-  console.log({msg, hook});
-  console.info(msg, hook.result, hook.data) && hook
+  Console.log({msg, data: hook.data, result: hook.result});
 };
 
 module.exports = {

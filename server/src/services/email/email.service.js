@@ -5,7 +5,6 @@ const mailgun = require('nodemailer-mailgun-transport');
 
 module.exports = function () {
   const app = this;
-  const paginate = app.get('paginate');
 
   const domain = app.get('MAILGUN_DOMAIN');
   const api_key = app.get('MAILGUN_API_KEY');

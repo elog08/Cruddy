@@ -4,12 +4,13 @@ const commonHooks  = require('feathers-hooks-common');
 const errors = require('@feathersjs/errors');
 const verifyHooks = require('feathers-authentication-management').hooks;
 const { iff, isProvider, discard } = commonHooks;
+const Console = console;
 
 const handleDuplicateUserError = hook => {
   if (hook.error && hook.error.errorType === 'uniqueViolated')
-    {
-      throw new errors.GeneralError(new Error('Email exists'));
-    }
+  {
+    throw new errors.GeneralError(new Error('Email exists'));
+  }
 };
 
 const validateInviteCodes = hook => {
@@ -26,14 +27,15 @@ const validateInviteCodes = hook => {
 };
 
 const sendVerificationEmail = options => hook => {
+  Console.info('sendVerificationEmail', options);
   if (!hook.params.provider) { return hook; }
-  const user = hook.result
+  const user = hook.result;
   if(hook.data && hook.data.email && user) {
-    hook.app.service('authManagement').notifier('resendVerifySignup', user)
-    return hook
+    hook.app.service('authManagement').notifier('resendVerifySignup', user);
+    return hook;
   }
-  return hook
-}
+  return hook;
+};
 
 module.exports = {
   before: {

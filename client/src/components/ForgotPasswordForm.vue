@@ -24,7 +24,7 @@ export default ({
       const { email } = this.model;
       const payload = {
         action: 'sendResetPwd',
-        value: { email }
+        value: { email },
       };
       this.forgot(payload).then((res) => {
         Console.info('doForgot', { res });

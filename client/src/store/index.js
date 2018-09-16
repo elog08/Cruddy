@@ -23,7 +23,7 @@ const rootStore = new Vuex.Store({
       status: false,
     },
     globalAlert: {
-      messages: []
+      messages: [],
     },
   },
   getters: {
@@ -46,15 +46,15 @@ const rootStore = new Vuex.Store({
     },
     ADD_GLOBAL_MESSAGE: (state, message) => {
       const id = Date.now();
-      state.globalAlert.messages.unshift({id, ...message});
+      state.globalAlert.messages.unshift({ id, ...message });
     },
     REMOVE_GLOBAL_MESSAGE: (state, id) => {
-      const idx = state.globalAlert.messages.findIndex((message) => message.id === id);
+      const idx = state.globalAlert.messages.findIndex(message => message.id === id);
       state.globalAlert.messages.splice(idx, 1);
     },
     CLEAR_GLOBAL_MESSAGES: (state, message) => {
       state.globalAlert.messages = [];
-    }
+    },
   },
   plugins: [
     // vuexLocal.plugin,

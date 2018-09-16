@@ -45,7 +45,7 @@ describe('Feathers application tests', function() {
   });
 
   after(function(done) {
-    console.info('Tests done... after hook')
+    Console.info('Tests done... after hook');
     this.server.close();
     done();
   });
@@ -109,15 +109,15 @@ describe('Feathers application tests', function() {
         const password = newUser.password + '123';
 
         const payload = {
-          "action": "passwordChange",
-          "value": {
-           oldPassword,
-           password,
-           "user": {
-            "email": newUser.email
-           }
+          'action': 'passwordChange',
+          'value': {
+            oldPassword,
+            password,
+            'user': {
+              'email': newUser.email
+            }
           }
-         };
+        };
 
         return client.post('/authManagement', payload)
           .catch(({response}) => {
@@ -130,15 +130,15 @@ describe('Feathers application tests', function() {
         const password = newUser.password + '123';
 
         const payload = {
-          "action": "passwordChange",
-          "value": {
-           oldPassword,
-           password,
-           "user": {
-            "email": newUser.email
-           }
+          'action': 'passwordChange',
+          'value': {
+            oldPassword,
+            password,
+            'user': {
+              'email': newUser.email
+            }
           }
-         };
+        };
 
         return client.post('/authManagement', payload)
           .then(res => {
@@ -174,7 +174,7 @@ describe('Feathers application tests', function() {
           });
       });
   
-    })
+    });
     
     it('gets the user profile', () => {
       return client.get(`/users/${lastUserId}`, {headers: {'Authorization': 'bearer ' + accessToken} })

@@ -1,5 +1,3 @@
-const { Forbidden } = require('@feathersjs/errors');
-
 module.exports = {
   before: {
     all: [],

@@ -11,3 +11,4 @@ script:
   - "cd scripts && sh test-dependencies.sh"
 addons:
   - chrome: stable
+  - docker-ce

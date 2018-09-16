@@ -6,6 +6,17 @@
     </form>
   </div>
 </template>
+<style>
+#environmental-variables {
+  width: 100%;
+}
+
+legend {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+</style>
 <script>
 import { mapActions } from 'vuex';
 
@@ -13,7 +24,7 @@ export default {
   name: 'create-form',
   props: ['images'],
   methods: {
-    ...mapActions({ create: 'site/create' }),
+    ...mapActions({ create: 'site/create', getListImages: 'image/find' }),
     doCreate() {
       this.create([this.model, {}]).then(
         (result) => {
@@ -24,6 +35,9 @@ export default {
         },
       );
     },
+  },
+  mounted() {
+    this.getListImages({ query: {} }).then(console.info).catch(console.error);
   },
   data() {
     return {

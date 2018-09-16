@@ -35,13 +35,15 @@ class SiteContainer {
     const container = hook.app.service('container');
     const volume = hook.app.service('volume');
 
+    const { image = 'elog08/tqfw'} = hook.data;
+
     if (hook.data.basic_username || hook.data.basic_password) {
       await SiteContainer.setPassword(hook);
     }
 
     let newVolume = await volume.create({});
     newVolume = await volume.get(newVolume.id);
-    let newSite = await container.create({Image: 'elog08/tqfw', env: {
+    let newSite = await container.create({Image: image, env: {
       ...SiteContainer.arrKeyValToObjj(hook.data.env),
       'VIRTUAL_HOST': hook.data.subdomain,
       'LETSENCRYPT_HOST': hook.data.subdomain,

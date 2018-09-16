@@ -69,3 +69,6 @@ typings/
 # App data
 server/htpasswd
 server/data
+
+# Local scripts
+server/local-run.sh

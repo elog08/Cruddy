@@ -54,7 +54,4 @@ app.use(express.errorHandler({ logger }));
 
 app.hooks(appHooks);
 
-const authManagement = app.service('authManagement');
-
-
 module.exports = app;

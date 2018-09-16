@@ -2,7 +2,7 @@ const authentication = require('@feathersjs/authentication');
 const jwt = require('@feathersjs/authentication-jwt');
 const local = require('@feathersjs/authentication-local');
 const authManagement = require('feathers-authentication-management');
-const hooks = require('feathers-hooks-common');
+const Console = console;
 
 module.exports = function (app) {
   const config = app.get('authentication');
@@ -16,31 +16,30 @@ module.exports = function (app) {
   const notifier = function(type, user, notifierOptions) {
     let subject, html;
 
-    console.info('Notify',{type, user, notifierOptions});
-    
-
+    Console.info('Notify',{type, user, notifierOptions});
+  
     switch (type) {
-      case 'resendVerifySignup':
-      case 'verifySignup':
-        subject = 'Email verification';
-        html = 'Verify your email: '+hashLink(user.verifyToken);
-        break;
-      case 'sendResetPwd':
-        subject = 'Password reset email';
-        html = 'Reset your password: '+hashLink(user.resetShortToken);
-        break;
-      case 'resetPwd':
-        subject = 'Password reset';
-        html = 'Reset your password: '+hashLink(user.verifyToken);
-        break;
-      case 'passwordChange':
-        subject = 'Password changed';
-        html = 'Your password was successfully changed.';
-        break;
-      case 'identityChange':
-        subject = 'Your identity was changed';
-        html = 'Verify changes:'+hashLink(user.verifyToken);
-        break;
+    case 'resendVerifySignup':
+    case 'verifySignup':
+      subject = 'Email verification';
+      html = 'Verify your email: '+hashLink(user.verifyToken);
+      break;
+    case 'sendResetPwd':
+      subject = 'Password reset email';
+      html = 'Reset your password: '+hashLink(user.resetShortToken);
+      break;
+    case 'resetPwd':
+      subject = 'Password reset';
+      html = 'Reset your password: '+hashLink(user.verifyToken);
+      break;
+    case 'passwordChange':
+      subject = 'Password changed';
+      html = 'Your password was successfully changed.';
+      break;
+    case 'identityChange':
+      subject = 'Your identity was changed';
+      html = 'Verify changes:'+hashLink(user.verifyToken);
+      break;
     }
 
     const message = {
@@ -50,15 +49,15 @@ module.exports = function (app) {
       html
     };
 
-    console.info('Emailing', {message});
+    Console.info('Emailing', {message});
 
     return app.service('emails').create(message);
-  }
+  };
 
   const options = {
     notifier
   };
-  app.configure(authManagement({ options }))
+  app.configure(authManagement({ options }));
   app.configure(jwt());
   app.configure(local());
 
