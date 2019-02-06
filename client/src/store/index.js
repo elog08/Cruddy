@@ -22,6 +22,10 @@ const rootStore = new Vuex.Store({
     connection: {
       status: false,
     },
+    activity: {
+      current: {},
+      log: []
+    },
     globalAlert: {
       messages: [],
     },
@@ -37,6 +41,10 @@ const rootStore = new Vuex.Store({
     },
     SOCKET_CONNECT_ERROR: (state) => {
       state.connection.status = false;
+    },
+    ACTIVITY: (state, action) => {
+      state.activity.current = action;
+      state.activity.log.push(action);
     },
     SET_LOGIN: (state) => {
       state.isLoggedIn = true;
@@ -85,6 +93,19 @@ const rootStore = new Vuex.Store({
     rootStore.commit('SET_LOGIN', false);
   });
 })();
+
+rootStore.subscribe((mutation, state) => {
+  try {
+  const [noun, verb] = mutation.type.split('/');
+  if (verb && verb.indexOf('Pending') > -1) {
+    rootStore.commit('ACTIVITY', {noun, verb});
+    console.log(noun, verb)
+  }
+  
+} catch (e) {
+  console.warn('Error converting mutation to activity', e);
+}
+})
 
 
 Vue.use(VueSocketio, socket, rootStore);

@@ -31,6 +31,7 @@ const sendVerificationEmail = options => hook => {
   if (!hook.params.provider) { return hook; }
   const user = hook.result;
   if(hook.data && hook.data.email && user) {
+    
     hook.app.service('authManagement').notifier('resendVerifySignup', user);
     return hook;
   }

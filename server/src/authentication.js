@@ -75,7 +75,7 @@ module.exports = function (app) {
     }
   });
 
-  app.service('authManagement').notifier = notifier;
+  // app.service('authManagement').notifier = notifier;
   // const isAction = (...args) => hook => args.includes(hook.data.action);
   //   app.service('authManagement').before({
   //     create: [

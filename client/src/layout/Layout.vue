@@ -3,6 +3,7 @@
         <nav-bar/>
       <b-container>
           <global-alert/>
+          <activity-status/>
           <connection-status/>
           <breadcrumbs/>
          <slot></slot>
@@ -12,6 +13,7 @@
 <script>
 import Navbar from '../components/Navbar';
 import ConnectionStatus from '../components/ConnectionStatus';
+import ActivityStatus from '../components/ActivityStatus';
 import GlobalAlert from '../components/GlobalAlert';
 
 export default ({
@@ -20,6 +22,7 @@ export default ({
     'nav-bar': Navbar,
     'global-alert': GlobalAlert,
     'connection-status': ConnectionStatus,
+    'activity-status': ActivityStatus
   },
 });
 </script>
