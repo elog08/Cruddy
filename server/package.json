@@ -41,6 +41,7 @@
     "compression": "^1.7.2",
     "cors": "^2.8.4",
     "feathers-authentication-hooks": "^0.3.0",
+    "feathers-authentication-management": "^2.0.1",
     "feathers-hooks-common": "^4.16.2",
     "feathers-knex": "^3.1.1",
     "feathers-logger": "^0.3.2",

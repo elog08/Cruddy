@@ -43,16 +43,21 @@ class SiteContainer {
 
     let newVolume = await volume.create({});
     newVolume = await volume.get(newVolume.id);
-    let newSite = await container.create({Image: image, env: {
-      ...SiteContainer.arrKeyValToObjj(hook.data.env),
-      'VIRTUAL_HOST': hook.data.subdomain,
-      'LETSENCRYPT_HOST': hook.data.subdomain,
-      'LETSENCRYPT_EMAIL': hook.data.email,
-    }, binds: {
-      [newVolume.Name]:'/app/api/data'
-    }});
-    hook.data.volumeId = newVolume.Name;
-    hook.data.containerId = newSite.id;
+    try {
+      let newSite = await container.create({Image: image, env: {
+        ...SiteContainer.arrKeyValToObjj(hook.data.env),
+        'VIRTUAL_HOST': hook.data.subdomain,
+        'LETSENCRYPT_HOST': hook.data.subdomain,
+        'LETSENCRYPT_EMAIL': hook.data.email,
+      }, binds: {
+        [newVolume.Name]:'/app/api/data'
+      }});
+      hook.data.volumeId = newVolume.Name;
+      hook.data.containerId = newSite.id;
+    } catch (e) {
+      console.error('Error creating new site', e);
+    }
+    
     return hook;
   }
 
