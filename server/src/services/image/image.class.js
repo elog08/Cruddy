@@ -8,9 +8,9 @@ const path = require('path');
 const Console = console;
 
 const promisifyStream = (stream) => new Promise((resolve, reject) => {
-  stream.on('data', (d) => console.log(d.toString()))
-  stream.on('end', resolve)
-  stream.on('error', reject)
+  // stream.on('data', (d) => console.log(d.toString()));
+  stream.on('end', resolve);
+  stream.on('error', reject);
 });
 
 class Service {
@@ -61,15 +61,15 @@ class Service {
     try {
       Console.info('image', 'get', { id });
       const image = await this.docker.image.get(id);
-      const { data: { RepoTags: [name]} } = await image.status();
-      return {_id: id,  name};
+      const { data: { ContainerConfig: { Env }, RepoTags: [name]} } = await image.status();
+      return {_id: id,  name, env: Env};
     }
     catch (e) {
       Console.error('image', 'get', 'error', {e});
       if (e.statusCode && e.statusCode === 404)
-        {
-          throw new errors.NotFound(e.reason);
-        }
+      {
+        throw new errors.NotFound(e.reason);
+      }
       else {
         throw new errors.BadRequest('Not found', {e});
       }
