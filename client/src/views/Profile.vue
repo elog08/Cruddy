@@ -17,6 +17,8 @@ import { mapGetters, mapActions } from 'vuex';
 import ProfileForm from '../components/ProfileForm';
 import ChangePasswordForm from '../components/ChangePasswordForm';
 
+const Console = console;
+
 export default {
   name: 'Profile',
   components: { 'profile-form': ProfileForm, 'change-password-form': ChangePasswordForm },
@@ -34,12 +36,12 @@ export default {
           user: { email: this.user.email },
         },
       };
-      this.$store.dispatch('authManagement/create', payload).then(console.log, console.error);
+      this.$store.dispatch('authManagement/create', payload).then(Console.log, Console.error);
     },
     updateProfile(eventData) {
       const toUpdate = { ...this.user, ...eventData.model };
       console.info('Update Profile');
-      this.update([this.user.id, toUpdate, {}]).then(console.info, console.error);
+      this.update([this.user.id, toUpdate, {}]);
     },
   },
 };

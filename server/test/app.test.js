@@ -74,6 +74,7 @@ describe('Feathers application tests', function() {
     
     it ('creates a new user with a valid invite code', () => {
       let newUserPayload = {...newUser, invite_code: invite_codes[0]};
+
       return client.post('/users', newUserPayload)
         .then(res => {
           assert.equal(res.status, 201);
@@ -94,13 +95,14 @@ describe('Feathers application tests', function() {
         'email': newUser.email,
         'password': newUser.password
       };
-      
+
       return client.post('/authentication', payload)
         .then(res => {
           accessToken = res.data.accessToken;
           lastUserId = (jwtDecode(accessToken)).userId;
           assert.equal(res.status, 201);
         });
+        
     });
 
     describe('changes the password', () => {

@@ -1,15 +1,16 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
 const { hashPassword, protect } = require('@feathersjs/authentication-local').hooks;
-const commonHooks  = require('feathers-hooks-common');
+const commonHooks = require('feathers-hooks-common');
 const errors = require('@feathersjs/errors');
-const verifyHooks = require('feathers-authentication-management').hooks;
+
 const { iff, isProvider, discard } = commonHooks;
 const Console = console;
 
 const handleDuplicateUserError = hook => {
   if (hook.error && hook.error.errorType === 'uniqueViolated')
   {
-    throw new errors.GeneralError(new Error('Email exists'));
+    Console.error(hook.error);
+    throw new errors.GeneralError(new Error('Username or email already exists'));
   }
 };
 
@@ -26,24 +27,19 @@ const validateInviteCodes = hook => {
   return hook;
 };
 
-const sendVerificationEmail = options => hook => {
-  Console.info('sendVerificationEmail', options);
-  if (!hook.params.provider) { return hook; }
-  const user = hook.result;
-  if(hook.data && hook.data.email && user) {
-    
-    hook.app.service('authManagement').notifier('resendVerifySignup', user);
-    return hook;
-  }
-  return hook;
-};
 
 module.exports = {
   before: {
     all: [],
     find: [ authenticate('jwt') ],
     get: [ authenticate('jwt') ],
-    create: [ iff(isProvider('external'), discard('confirm')), verifyHooks.addVerification(), validateInviteCodes, hashPassword() ],
+    create: [ 
+      commonHooks.lowerCase('email'), 
+      hashPassword(),
+      iff(isProvider('external'), 
+        discard('confirm')), 
+      validateInviteCodes, 
+    ],
     update: [ authenticate('jwt') ],
     patch: [ iff(isProvider('external'), hashPassword()), authenticate('jwt'),
       commonHooks.iff(
@@ -72,7 +68,7 @@ module.exports = {
     ],
     find: [],
     get: [],
-    create: [ sendVerificationEmail(), verifyHooks.removeVerification() ],
+    create: [],
     update: [],
     patch: [],
     remove: []
