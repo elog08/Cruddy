@@ -55,7 +55,7 @@ class SiteContainer {
       hook.data.volumeId = newVolume.Name;
       hook.data.containerId = newSite.id;
     } catch (e) {
-      console.error('Error creating new site', e);
+      Console.error('Error creating new site', e);
     }
     
     return hook;

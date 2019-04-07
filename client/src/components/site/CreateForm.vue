@@ -18,7 +18,8 @@ legend {
 
 </style>
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
+const Console = console;
 
 export default {
   name: 'create-form',
@@ -36,9 +37,24 @@ export default {
       );
     },
   },
-  mounted() {
-    this.getListImages({ query: {} }).then(console.info).catch(console.error);
+  watch: {
+    'model.image': {
+      handler(newImageName) {
+        try {
+          const [ image ] = this.images.filter(image => image.name === newImageName);
+          this.model.env = image.env;
+          } 
+        catch (e) {
+          Console.error(e);
+        }
+      },
+      deep: true
+    }
   },
+  mounted() {
+    this.getListImages({ query: {} });
+  },
+  
   data() {
     return {
       model: {
@@ -46,6 +62,7 @@ export default {
         subdomain: '',
         email: '',
         env: ['ADMIN_EMAIL=user@domain.com'],
+        extrahosts: ['localhost:127.0.0.1'],
         username: '',
         image: '',
         password: '',
@@ -98,6 +115,24 @@ export default {
                   return isValid
                     ? []
                     : ['Environment var pattern invalid, use KEY=VAL pairs'];
+                },
+              },
+              {
+                type: 'array',
+                label: 'Extra Hosts',
+                model: 'extrahosts',
+                showRemoveButton: true,
+                itemFieldClasses: 'form-control',
+                itemContainerClasses: 'input-group pb-2',
+                newElementButtonLabelClasses: 'btn mt-2',
+                validator: (value, field, model) => {
+                  const validPattern = /([^:;]+:[^:;]+(;(?!$)|$))+/;
+                  const isValid = value
+                    .filter(v => !!v)
+                    .every(v => v && v.match(validPattern));
+                  return isValid
+                    ? []
+                    : ['Extra hosts var pattern invalid, use KEY=VAL pairs'];
                 },
               },
               {

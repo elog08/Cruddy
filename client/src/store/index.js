@@ -97,6 +97,7 @@ const rootStore = new Vuex.Store({
 rootStore.subscribe((mutation, state) => {
   try {
   const [noun, verb] = mutation.type.split('/');
+  console.info({noun, verb});
   if (verb && verb.indexOf('Pending') > -1) {
     rootStore.commit('ACTIVITY', {noun, verb});
     console.log(noun, verb)

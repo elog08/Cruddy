@@ -74,14 +74,15 @@ class Service {
     try {
       const port = await getPort();
       const HostPort = port + '';
-      const { Image = 'hello-world', env = {}, binds = {} } = data;
+      const { Image = 'hello-world', env = {}, binds = {}, extrahosts = {} } = data;
       const Env = Object.keys(env).map(k => `${k}=${(env[k])}`);
       const Binds= Object.keys(binds).map(k => `${k}:${(binds[k])}`);
-
+      const ExtraHosts = Object.keys(extrahosts).map(k => `${k}:${(extrahosts[k])}`);
       const config = {
         Image,
         name: 'test_' + Date.now(),
         Env,
+        ExtraHosts,
         Binds
       };
       const container = await this.docker.container.create(config);
