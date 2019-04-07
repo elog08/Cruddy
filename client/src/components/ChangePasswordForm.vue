@@ -9,7 +9,7 @@
 <script>
 import { mapActions } from 'vuex';
 
-const Console = console;
+//const Console = console;
 
 export default ({
   name: 'change-password-form',
