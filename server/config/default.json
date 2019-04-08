@@ -6,9 +6,15 @@
     "default": 10,
     "max": 50
   },
-  "MAILGUN_API_KEY": "MAILGUN_API_KEY",
-  "MAILGUN_DOMAIN": "MAILGUN_DOMAIN",
-  "FROM_EMAIL": "contact@cruddy.xyz",
+  "emailConfig": {
+    "SMTP_HOST": "smtp.mailtrap.io",
+    "SMTP_PORT": "2525",
+    "SMTP_SECURE": false,
+    "SMTP_USERNAME": "fae01291be9569",
+    "SMTP_PASSWORD": "e0ac3301f212a5",
+    "SMTP_REQUIRE_TLS": false,
+    "FROM_EMAIL": "contact@cruddy.xyz"
+  },
   "application": {
     "invite_codes": ["Cruddy123!", "code"]
   },
