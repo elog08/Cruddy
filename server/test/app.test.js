@@ -106,7 +106,7 @@ describe('Feathers application tests', function() {
     });
 
     describe('changes the password', () => {
-      it ('complains with an invalid old password', () => {
+      xit ('complains with an invalid old password', () => {
         const oldPassword = newUser.password + '123';
         const password = newUser.password + '123';
 
@@ -127,7 +127,7 @@ describe('Feathers application tests', function() {
           });
       });
 
-      it ('updates with an valid old password', () => {
+      xit ('updates with an valid old password', () => {
         const oldPassword = newUser.password;
         const password = newUser.password + '123';
 
@@ -148,7 +148,7 @@ describe('Feathers application tests', function() {
           });
       });
 
-      it('does not authenticate with the old password', () => {
+      xit('does not authenticate with the old password', () => {
         const payload = {
           'strategy': 'local',
           'email': newUser.email,
@@ -161,7 +161,7 @@ describe('Feathers application tests', function() {
           });
       });
 
-      it('authenticates the user with the new password', () => {
+      xit('authenticates the user with the new password', () => {
         const payload = {
           'strategy': 'local',
           'email': newUser.email,
