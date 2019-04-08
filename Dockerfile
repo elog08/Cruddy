@@ -1,11 +1,9 @@
 FROM keymetrics/pm2:latest-alpine
 
 # NPM build depedencies
-RUN apk add --no-cache --virtual .gyp \
-        python \
-        make \
-        g++ \
-    && apk del .gyp
+RUN apk --no-cache add --virtual native-deps \
+  g++ gcc libgcc libstdc++ linux-headers make python && \
+  npm install --quiet node-gyp -g
 
 VOLUME [ "/server/htpasswd" ,  "/server/data"]
 COPY client client/

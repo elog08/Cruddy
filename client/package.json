@@ -10,7 +10,7 @@
     "dev": "webpack-dev-server --inline --progress --host 0.0.0.0 --config build/webpack.dev.conf.js ",
     "start": "if-env NODE_ENV=production && npm run prod || npm run dev",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
-    "prod": "npm run build && node server.js"
+    "prod": "node server.js"
   },
   "dependencies": {
     "@feathersjs/authentication-client": "^1.0.2",
