@@ -44,12 +44,15 @@ class SiteContainer {
     let newVolume = await volume.create({});
     newVolume = await volume.get(newVolume.id);
     try {
-      let newSite = await container.create({Image: image, env: {
+      let newSite = await container.create({
+        Image: image, 
+        env: {
         ...SiteContainer.arrKeyValToObjj(hook.data.env),
         'VIRTUAL_HOST': hook.data.subdomain,
         'LETSENCRYPT_HOST': hook.data.subdomain,
         'LETSENCRYPT_EMAIL': hook.data.email,
-      }, binds: {
+      }, extrahosts: hook.data.extrahosts,
+      binds: {
         [newVolume.Name]:'/app/api/data'
       }});
       hook.data.volumeId = newVolume.Name;

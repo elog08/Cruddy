@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="images">
   <site-list/>
   <b-btn  @click="showCreateModal">Create</b-btn>
   <b-modal ok-disabled cancel-disabled ref="modalCreate">
@@ -39,7 +39,7 @@ export default {
     },
   },
   mounted() {
-    this.getListImages({ query: {} }).then(console.info).catch(console.error);
+    this.getListImages({ query: {} });
   },
 };
 </script>

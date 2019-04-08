@@ -8,6 +8,8 @@ const fs = require('fs');
 const path = require('path');
 const Console = console;
 
+const SHM_SIZE = 536870912;
+
 const promisifyStream = stream => new Promise((resolve, reject) => {
   let allData = '';
   stream.on('data', data => {
@@ -74,17 +76,26 @@ class Service {
     try {
       const port = await getPort();
       const HostPort = port + '';
-      const { Image = 'hello-world', env = {}, binds = {}, extrahosts = {} } = data;
+      const { Image = 'hello-world', env = {}, binds = {}, extrahosts = [] } = data;
       const Env = Object.keys(env).map(k => `${k}=${(env[k])}`);
       const Binds= Object.keys(binds).map(k => `${k}:${(binds[k])}`);
-      const ExtraHosts = Object.keys(extrahosts).map(k => `${k}:${(extrahosts[k])}`);
+      const ExtraHosts = extrahosts;
+
+      const HostConfig = {
+        ShmSize: SHM_SIZE,
+        ExtraHosts,
+        Binds
+      };
+      
       const config = {
         Image,
         name: 'test_' + Date.now(),
         Env,
-        ExtraHosts,
-        Binds
+        HostConfig
       };
+
+      // Console.dir({config});
+    
       const container = await this.docker.container.create(config);
       const result = await container.start();
       return { id: result.data.Id, HostPort };
